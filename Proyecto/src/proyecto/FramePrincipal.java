@@ -7,6 +7,7 @@ package proyecto;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,7 +20,7 @@ public class FramePrincipal extends javax.swing.JFrame {
      */
     public FramePrincipal() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         ButtonGroup bg = new ButtonGroup();
         bg.add(jRadioButtonSi);
         bg.add(jRadioButtonNo);
@@ -47,11 +48,14 @@ public class FramePrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuArchivo = new javax.swing.JMenu();
         jMenuItemNuevoArchivo = new javax.swing.JMenuItem();
         jMenuCampos = new javax.swing.JMenu();
         jMenuItemNuevoCampo = new javax.swing.JMenuItem();
+        JMenuItemListaCampos = new javax.swing.JMenuItem();
 
         jLabel1.setText("Nombre del Campo:");
 
@@ -142,21 +146,38 @@ public class FramePrincipal extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel4.setText("File Manager");
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(jLabel4)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(124, 124, 124)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jMenuArchivo.setText("Archivo");
@@ -186,6 +207,14 @@ public class FramePrincipal extends javax.swing.JFrame {
         });
         jMenuCampos.add(jMenuItemNuevoCampo);
 
+        JMenuItemListaCampos.setText("Listar Campos");
+        JMenuItemListaCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenuItemListaCamposActionPerformed(evt);
+            }
+        });
+        jMenuCampos.add(JMenuItemListaCampos);
+
         jMenuBar1.add(jMenuCampos);
 
         setJMenuBar(jMenuBar1);
@@ -214,22 +243,23 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemNuevoCampoMouseClicked
 
     private void jButtonGuardarCampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarCampoMouseClicked
-        if(jTextField1.toString() != " "){
-            String nombre = jTextField1.toString();
+        if (jTextField1.toString() != " ") {
+            String nombre = jTextField1.getText();
             String tipo = jComboBox1.getSelectedItem().toString();
             boolean campo_llave = false;
-            if(jRadioButtonSi.isSelected()){
+            if (jRadioButtonSi.isSelected()) {
                 campo_llave = true;
             }
             Campo campo = new Campo(nombre, tipo, campo_llave);
             archivo.addCampo(campo);
-            JOptionPane.showMessageDialog(null,"El campo fue creado exitósamente");
+            JOptionPane.showMessageDialog(null, "El campo fue creado exitósamente");
+            jTextField1.setText("");
             jDCrearCampo.setVisible(false);
-        }else{
-            JOptionPane.showMessageDialog(null,"Por favor, ingrese un nombre para el campo");
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un nombre para el campo");
         }
-        
-        
+
+
     }//GEN-LAST:event_jButtonGuardarCampoMouseClicked
 
     private void jMenuItemNuevoCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevoCampoActionPerformed
@@ -247,8 +277,27 @@ public class FramePrincipal extends javax.swing.JFrame {
         String nombre = JOptionPane.showInputDialog("Ingrese un nombre para el archivo: ");
         archivo = new Archivo(nombre);
         archivo.escribirArchivo();
-        JOptionPane.showMessageDialog(null,"El archivo fue creado exitósamente");
+        JOptionPane.showMessageDialog(null, "El archivo fue creado exitósamente");
     }//GEN-LAST:event_jMenuItemNuevoArchivoActionPerformed
+
+    private void JMenuItemListaCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItemListaCamposActionPerformed
+        // TODO add your handling code here:
+        String[] cols = {"", ""};
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("Campo");
+        tabla.addColumn("Tipo");
+        Object[] fila = new Object[2];
+
+        for (int i = 0; i < archivo.getListaCampos().size(); i++) {
+
+            fila[0] = archivo.getListaCampos().get(i).nombre;
+            fila[1] = archivo.getListaCampos().get(i).tipo;
+            tabla.addRow(fila);
+        }
+
+        jTable1.setModel(tabla);
+
+    }//GEN-LAST:event_JMenuItemListaCamposActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +335,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem JMenuItemListaCampos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonGuardarCampo;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -302,6 +352,8 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButtonNo;
     private javax.swing.JRadioButton jRadioButtonSi;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
     Archivo archivo;
