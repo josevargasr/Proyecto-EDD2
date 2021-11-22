@@ -5,6 +5,9 @@
  */
 package proyecto;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author josevargas
@@ -16,6 +19,10 @@ public class FramePrincipal extends javax.swing.JFrame {
      */
     public FramePrincipal() {
         initComponents();
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(jRadioButtonSi);
+        bg.add(jRadioButtonNo);
+        jRadioButtonNo.setSelected(true);
     }
 
     /**
@@ -27,24 +34,128 @@ public class FramePrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDCrearCampo = new javax.swing.JDialog();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jRadioButtonSi = new javax.swing.JRadioButton();
+        jRadioButtonNo = new javax.swing.JRadioButton();
+        jButtonGuardarCampo = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuArchivo = new javax.swing.JMenu();
         jMenuItemNuevoArchivo = new javax.swing.JMenuItem();
         jMenuCampos = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemNuevoCampo = new javax.swing.JMenuItem();
+
+        jLabel1.setText("Nombre del Campo:");
+
+        jLabel2.setText("Campo Llave:");
+
+        jRadioButtonSi.setText("Si");
+
+        jRadioButtonNo.setSelected(true);
+        jRadioButtonNo.setText("No");
+
+        jButtonGuardarCampo.setText("Guardar Campo");
+        jButtonGuardarCampo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonGuardarCampoMouseClicked(evt);
+            }
+        });
+
+        jLabel3.setText("Tipo de Campo:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "String", "Int", "Char", "Long" }));
+
+        jButton1.setText("Regresar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDCrearCampoLayout = new javax.swing.GroupLayout(jDCrearCampo.getContentPane());
+        jDCrearCampo.getContentPane().setLayout(jDCrearCampoLayout);
+        jDCrearCampoLayout.setHorizontalGroup(
+            jDCrearCampoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDCrearCampoLayout.createSequentialGroup()
+                .addGroup(jDCrearCampoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDCrearCampoLayout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(jLabel2))
+                    .addGroup(jDCrearCampoLayout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(jRadioButtonSi)
+                        .addGap(44, 44, 44)
+                        .addComponent(jRadioButtonNo))
+                    .addGroup(jDCrearCampoLayout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addComponent(jLabel3))
+                    .addGroup(jDCrearCampoLayout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addGroup(jDCrearCampoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jDCrearCampoLayout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDCrearCampoLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addComponent(jButtonGuardarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+        );
+        jDCrearCampoLayout.setVerticalGroup(
+            jDCrearCampoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDCrearCampoLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jDCrearCampoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButtonSi)
+                    .addComponent(jRadioButtonNo))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(jDCrearCampoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonGuardarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        jLabel4.setText("File Manager");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(jLabel4)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(124, 124, 124)
+                .addComponent(jLabel4)
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         jMenuArchivo.setText("Archivo");
@@ -56,8 +167,18 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenuCampos.setText("Campos");
 
-        jMenuItem2.setText("Agregar Campos");
-        jMenuCampos.add(jMenuItem2);
+        jMenuItemNuevoCampo.setText("Agregar Campos");
+        jMenuItemNuevoCampo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItemNuevoCampoMouseClicked(evt);
+            }
+        });
+        jMenuItemNuevoCampo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemNuevoCampoActionPerformed(evt);
+            }
+        });
+        jMenuCampos.add(jMenuItemNuevoCampo);
 
         jMenuBar1.add(jMenuCampos);
 
@@ -78,6 +199,42 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItemNuevoCampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemNuevoCampoMouseClicked
+        jDCrearCampo.setModal(true);
+        jDCrearCampo.pack();
+        jDCrearCampo.setLocationRelativeTo(null);
+        jDCrearCampo.setVisible(true);
+    }//GEN-LAST:event_jMenuItemNuevoCampoMouseClicked
+
+    private void jButtonGuardarCampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarCampoMouseClicked
+        if(jTextField1.toString() != " "){
+            String nombre = jTextField1.toString();
+            String tipo = jComboBox1.getSelectedItem().toString();
+            boolean campo_llave = false;
+            if(jRadioButtonSi.isSelected()){
+                campo_llave = true;
+            }
+            Campo campo = new Campo(nombre, tipo, campo_llave);
+            JOptionPane.showMessageDialog(null,"El campo fue creado exitósamente");
+            jDCrearCampo.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(null,"Por favor, ingrese un nombre para el campo");
+        }
+        
+        
+    }//GEN-LAST:event_jButtonGuardarCampoMouseClicked
+
+    private void jMenuItemNuevoCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevoCampoActionPerformed
+        jDCrearCampo.setModal(true);
+        jDCrearCampo.pack();
+        jDCrearCampo.setLocationRelativeTo(null);
+        jDCrearCampo.setVisible(true);
+    }//GEN-LAST:event_jMenuItemNuevoCampoActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        jDCrearCampo.setVisible(false);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -115,11 +272,22 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonGuardarCampo;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JDialog jDCrearCampo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenuArchivo;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCampos;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemNuevoArchivo;
+    private javax.swing.JMenuItem jMenuItemNuevoCampo;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton jRadioButtonNo;
+    private javax.swing.JRadioButton jRadioButtonSi;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
