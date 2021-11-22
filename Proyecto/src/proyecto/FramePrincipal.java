@@ -19,6 +19,7 @@ public class FramePrincipal extends javax.swing.JFrame {
      */
     public FramePrincipal() {
         initComponents();
+        
         ButtonGroup bg = new ButtonGroup();
         bg.add(jRadioButtonSi);
         bg.add(jRadioButtonNo);
@@ -161,6 +162,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuArchivo.setText("Archivo");
 
         jMenuItemNuevoArchivo.setText("Nuevo");
+        jMenuItemNuevoArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemNuevoArchivoActionPerformed(evt);
+            }
+        });
         jMenuArchivo.add(jMenuItemNuevoArchivo);
 
         jMenuBar1.add(jMenuArchivo);
@@ -216,6 +222,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                 campo_llave = true;
             }
             Campo campo = new Campo(nombre, tipo, campo_llave);
+            archivo.addCampo(campo);
             JOptionPane.showMessageDialog(null,"El campo fue creado exitósamente");
             jDCrearCampo.setVisible(false);
         }else{
@@ -235,6 +242,13 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         jDCrearCampo.setVisible(false);
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jMenuItemNuevoArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevoArchivoActionPerformed
+        String nombre = JOptionPane.showInputDialog("Ingrese un nombre para el archivo: ");
+        archivo = new Archivo(nombre);
+        archivo.escribirArchivo();
+        JOptionPane.showMessageDialog(null,"El archivo fue creado exitósamente");
+    }//GEN-LAST:event_jMenuItemNuevoArchivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,4 +304,5 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButtonSi;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+    Archivo archivo;
 }
