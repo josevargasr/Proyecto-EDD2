@@ -5,8 +5,13 @@
  */
 package proyecto;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -235,7 +240,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,10 +458,33 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jMenuItemNuevoArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevoArchivoActionPerformed
-        String nombre = JOptionPane.showInputDialog("Ingrese un nombre para el archivo: ");
-        archivo = new Archivo(nombre);
-        archivo.escribirArchivo();
-        JOptionPane.showMessageDialog(null, "El archivo fue creado exitósamente");
+        String direction;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("./"));
+        FileNameExtensionFilter data = new FileNameExtensionFilter("DAT FILE", "dat");
+        fileChooser.setFileFilter(data);
+        int seleccion = fileChooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File file = null;
+            FileOutputStream fos = null;
+            ObjectOutputStream ous = null;
+
+            try {
+                if (fileChooser.getFileFilter().getDescription().equals("DAT FILE")) {
+                    direction = fileChooser.getSelectedFile().getPath().toString() + ".dat";
+                    direction = direction.replace(".dat", "");
+                    direction += ".dat";
+                    System.out.println(direction);
+                    file = new File(direction);
+                    JOptionPane.showMessageDialog(null, "El archivo fue creado exitósamente");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Solo puede crear archivos DAT");
+                }
+            }catch (Exception e) {
+                
+            }
+        }
+        
     }//GEN-LAST:event_jMenuItemNuevoArchivoActionPerformed
 
     private void JMenuItemListaCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItemListaCamposActionPerformed
