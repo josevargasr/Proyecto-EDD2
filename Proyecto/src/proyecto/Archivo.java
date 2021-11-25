@@ -10,11 +10,18 @@ public class Archivo {
     private String path;
     File archivo = null;
     private ArrayList<Campo> listaCampos = new ArrayList();
+    private ArrayList<String> listaRegistros = new ArrayList();
 
     public Archivo(String nombre, String path) {
         this.nombre = nombre;
         this.path = path;
         archivo = new File(path + ".abc");
+        try{
+            archivo.createNewFile();
+        }catch(Exception e){
+            
+        }
+        
     }
 
     public Archivo() {
@@ -23,21 +30,41 @@ public class Archivo {
     public String getNombre() {
         return nombre;
     }
+    
+    public String getPath() {
+        return path;
+    }
 
     public ArrayList<Campo> getListaCampos() {
         return listaCampos;
     }
+    
+    public ArrayList<String> getListaRegistros() {
+        return listaRegistros;
+    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public void setListaCampos(ArrayList<Campo> listaCampos) {
         this.listaCampos = listaCampos;
     }
     
+    public void setListaRegistros(ArrayList<String> listaRegistros) {
+        this.listaRegistros = listaRegistros;
+    }
+    
     public void addCampo(Campo campo) {
         this.listaCampos.add(campo);
+    }
+    
+    public void addRegistro(String registro) {
+        this.listaRegistros.add(registro);
     }
     
     public void escribirArchivo() {

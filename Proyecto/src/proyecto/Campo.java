@@ -4,11 +4,13 @@ package proyecto;
 public class Campo {
     String tipo;
     String nombre;
+    int longitud;
     boolean llave_primaria;
 
-    public Campo(String nombre, String tipo, boolean llave_primaria) {
+    public Campo(String nombre, String tipo, int longitud, boolean llave_primaria) {
         this.nombre = nombre;
         this.tipo = tipo;
+        this.longitud = longitud;
         this.llave_primaria = llave_primaria;
     }
 
@@ -21,6 +23,14 @@ public class Campo {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+    
+    public int getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(int longitud) {
+        this.longitud = longitud;
     }
 
     public String getNombre() {
