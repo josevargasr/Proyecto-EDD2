@@ -7,12 +7,14 @@ import java.util.ArrayList;
 
 public class Archivo {
     private String nombre;
+    private String path;
     File archivo = null;
     private ArrayList<Campo> listaCampos = new ArrayList();
 
-    public Archivo(String nombre) {
+    public Archivo(String nombre, String path) {
         this.nombre = nombre;
-        archivo = new File("./"+ this.nombre + ".abc");
+        this.path = path;
+        archivo = new File(path + ".abc");
     }
 
     public Archivo() {

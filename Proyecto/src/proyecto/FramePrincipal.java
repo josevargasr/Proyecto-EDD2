@@ -458,27 +458,19 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jMenuItemNuevoArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevoArchivoActionPerformed
-        String direction;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("./"));
-        FileNameExtensionFilter data = new FileNameExtensionFilter("DAT FILE", "dat");
+        FileNameExtensionFilter data = new FileNameExtensionFilter("ABC FILE", "abc");
         fileChooser.setFileFilter(data);
         int seleccion = fileChooser.showSaveDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
-            File file = null;
-            FileOutputStream fos = null;
-            ObjectOutputStream ous = null;
-
             try {
-                if (fileChooser.getFileFilter().getDescription().equals("DAT FILE")) {
-                    direction = fileChooser.getSelectedFile().getPath().toString() + ".dat";
-                    direction = direction.replace(".dat", "");
-                    direction += ".dat";
-                    System.out.println(direction);
-                    file = new File(direction);
+                if (fileChooser.getFileFilter().getDescription().equals("ABC FILE")) {
+                    file = new File(fileChooser.getSelectedFile().getPath()+".abc");
+                    file.createNewFile();
                     JOptionPane.showMessageDialog(null, "El archivo fue creado exitósamente");
                 }else{
-                    JOptionPane.showMessageDialog(this, "Solo puede crear archivos DAT");
+                    JOptionPane.showMessageDialog(this, "Solo puede crear archivos ABC");
                 }
             }catch (Exception e) {
                 
@@ -690,5 +682,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
     Archivo archivo;
-    Campo nodo_campo;  
+    Campo nodo_campo;
+    File file = null;
 }
