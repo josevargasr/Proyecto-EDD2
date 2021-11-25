@@ -8,6 +8,7 @@ package proyecto;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -46,6 +47,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jDModificarCampo = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        PopMenuModificar = new javax.swing.JPopupMenu();
+        jMenuModificarCampo = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -57,7 +63,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuCampos = new javax.swing.JMenu();
+        jMenuModificarCampos = new javax.swing.JMenu();
         jMenuItemNuevoCampo = new javax.swing.JMenuItem();
         JMenuItemListaCampos = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -159,6 +165,49 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable2);
+
+        javax.swing.GroupLayout jDModificarCampoLayout = new javax.swing.GroupLayout(jDModificarCampo.getContentPane());
+        jDModificarCampo.getContentPane().setLayout(jDModificarCampoLayout);
+        jDModificarCampoLayout.setHorizontalGroup(
+            jDModificarCampoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDModificarCampoLayout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jDModificarCampoLayout.setVerticalGroup(
+            jDModificarCampoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDModificarCampoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jMenuModificarCampo.setText("jMenuItem16");
+        jMenuModificarCampo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuModificarCampoActionPerformed(evt);
+            }
+        });
+        PopMenuModificar.add(jMenuModificarCampo);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
@@ -242,7 +291,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuArchivo);
 
-        jMenuCampos.setText("Campos");
+        jMenuModificarCampos.setText("Campos");
 
         jMenuItemNuevoCampo.setText("Agregar Campos");
         jMenuItemNuevoCampo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -255,7 +304,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                 jMenuItemNuevoCampoActionPerformed(evt);
             }
         });
-        jMenuCampos.add(jMenuItemNuevoCampo);
+        jMenuModificarCampos.add(jMenuItemNuevoCampo);
 
         JMenuItemListaCampos.setText("Listar Campos");
         JMenuItemListaCampos.addActionListener(new java.awt.event.ActionListener() {
@@ -263,7 +312,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                 JMenuItemListaCamposActionPerformed(evt);
             }
         });
-        jMenuCampos.add(JMenuItemListaCampos);
+        jMenuModificarCampos.add(JMenuItemListaCampos);
 
         jMenuItem5.setText("Modificar Campos");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -271,7 +320,12 @@ public class FramePrincipal extends javax.swing.JFrame {
                 jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenuCampos.add(jMenuItem5);
+        jMenuItem5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jMenuItem5KeyPressed(evt);
+            }
+        });
+        jMenuModificarCampos.add(jMenuItem5);
 
         jMenuItem6.setText("Borrar Campos");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -279,9 +333,9 @@ public class FramePrincipal extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenuCampos.add(jMenuItem6);
+        jMenuModificarCampos.add(jMenuItem6);
 
-        jMenuBar1.add(jMenuCampos);
+        jMenuBar1.add(jMenuModificarCampos);
 
         jMenu1.setText("Registros");
 
@@ -407,7 +461,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void JMenuItemListaCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItemListaCamposActionPerformed
         // TODO add your handling code here:
-        String[] cols = {"", ""};
+
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("Campo");
         tabla.addColumn("Tipo");
@@ -458,11 +512,58 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
+        
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("Campo");
+        tabla.addColumn("Tipo");
+        Object[] fila = new Object[2];
+
+        for (int i = 0; i < archivo.getListaCampos().size(); i++) {
+
+            fila[0] = archivo.getListaCampos().get(i).nombre;
+            fila[1] = archivo.getListaCampos().get(i).tipo;
+            tabla.addRow(fila);
+        }
+
+        jTable2.setModel(tabla);
+        
+        jDModificarCampo.setModal(true);
+        jDModificarCampo.pack();
+        jDModificarCampo.setLocationRelativeTo(null);
+        jDModificarCampo.setVisible(true);
+        
+        
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenuItem5KeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuItem5KeyPressed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tabla = new DefaultTableModel();
+        try {
+            if (evt.isMetaDown()) {
+                PopMenuModificar.show(evt.getComponent(), evt.getX(), evt.getY());
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Seleccione algo antes de dar click derecho");
+
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jMenuModificarCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuModificarCampoActionPerformed
+        // TODO add your handling code here:
+         DefaultTableModel tabla = new DefaultTableModel();
+         
+        
+    }//GEN-LAST:event_jMenuModificarCampoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -501,10 +602,12 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem JMenuItemListaCampos;
+    private javax.swing.JPopupMenu PopMenuModificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonGuardarCampo;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JDialog jDCrearCampo;
+    private javax.swing.JDialog jDModificarCampo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -514,7 +617,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenuArchivo;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuCampos;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
@@ -532,11 +634,15 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem jMenuItemNuevoArchivo;
     private javax.swing.JMenuItem jMenuItemNuevoCampo;
+    private javax.swing.JMenuItem jMenuModificarCampo;
+    private javax.swing.JMenu jMenuModificarCampos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButtonNo;
     private javax.swing.JRadioButton jRadioButtonSi;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
     Archivo archivo;
