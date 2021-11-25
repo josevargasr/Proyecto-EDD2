@@ -549,6 +549,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         DefaultTableModel tabla = new DefaultTableModel();
         try {
             if (evt.isMetaDown()) {
+                
                 PopMenuModificar.show(evt.getComponent(), evt.getX(), evt.getY());
                 
             }
@@ -561,6 +562,21 @@ public class FramePrincipal extends javax.swing.JFrame {
     private void jMenuModificarCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuModificarCampoActionPerformed
         // TODO add your handling code here:
          DefaultTableModel tabla = new DefaultTableModel();
+         
+        archivo.setNombre(JOptionPane.showInputDialog("Ingrese el nuevo nombre"));
+        tabla.addColumn("Campo");
+        tabla.addColumn("Tipo");
+        Object[] fila = new Object[2];
+
+        for (int i = 0; i < archivo.getListaCampos().size(); i++) {
+
+            fila[0] = archivo.getListaCampos().get(i).nombre;
+            fila[1] = archivo.getListaCampos().get(i).tipo;
+            tabla.addRow(fila);
+        }
+         jTable2.setModel(tabla);
+         JOptionPane.showMessageDialog(jDModificarCampo, "Modificado con exito la tarea");
+         
          
         
     }//GEN-LAST:event_jMenuModificarCampoActionPerformed
@@ -646,4 +662,5 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
     Archivo archivo;
+    Campo nodo_campo;  
 }
