@@ -532,11 +532,26 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemListarCamposActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        archivo = new Archivo("./pruebaabrir.abc");
-        archivo.cargarArchivo();
-        JOptionPane.showMessageDialog(this, "El archivo se abrió con éxito");
-        openfile = true;
-        ArchivoAbierto();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("./"));
+        FileNameExtensionFilter data = new FileNameExtensionFilter("ABC FILE", "abc");
+        fileChooser.setFileFilter(data);
+        int seleccion = fileChooser.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            try {
+                if (fileChooser.getFileFilter().getDescription().equals("ABC FILE")) {
+                    archivo = new Archivo(fileChooser.getSelectedFile().getPath());
+                    archivo.cargarArchivo();
+                    JOptionPane.showMessageDialog(null, "El archivo se abrio exitósamente");
+                    openfile = true;
+                    ArchivoAbierto();
+                }else{
+                    JOptionPane.showMessageDialog(this, "Solo puede crear archivos ABC");
+                }
+            }catch (Exception e) {
+                
+            }
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
