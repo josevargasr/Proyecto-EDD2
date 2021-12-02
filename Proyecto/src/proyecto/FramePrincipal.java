@@ -459,7 +459,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         if (jTextField1.toString() != "") {
             String nombre = jTextField1.getText();
             String tipo = jComboBox1.getSelectedItem().toString();
-            int longitud = (Integer)jSpinner1.getValue();
+            int longitud = (Integer) jSpinner1.getValue();
             boolean campo_llave = false;
             if (jRadioButtonSi.isSelected()) {
                 campo_llave = true;
@@ -488,26 +488,11 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jMenuItemNuevoArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevoArchivoActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("./"));
-        FileNameExtensionFilter data = new FileNameExtensionFilter("ABC FILE", "abc");
-        fileChooser.setFileFilter(data);
-        int seleccion = fileChooser.showSaveDialog(this);
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            try {
-                if (fileChooser.getFileFilter().getDescription().equals("ABC FILE")) {
-                    archivo = new Archivo("",fileChooser.getSelectedFile().getPath());
-                    JOptionPane.showMessageDialog(null, "El archivo fue creado exitósamente");
-                    openfile = true;
-                    ArchivoAbierto();
-                }else{
-                    JOptionPane.showMessageDialog(this, "Solo puede crear archivos ABC");
-                }
-            }catch (Exception e) {
-                
-            }
-        }
-        
+        archivo = new Archivo();
+        JOptionPane.showMessageDialog(null, "El archivo fue creado exitósamente");
+        openfile = true;
+        ArchivoAbierto();
+
     }//GEN-LAST:event_jMenuItemNuevoArchivoActionPerformed
 
     private void jMenuItemListarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListarCamposActionPerformed
@@ -545,22 +530,22 @@ public class FramePrincipal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "El archivo se abrio exitósamente");
                     openfile = true;
                     ArchivoAbierto();
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Solo puede crear archivos ABC");
                 }
-            }catch (Exception e) {
-                
+            } catch (Exception e) {
+
             }
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog (null, "¿Le gustaría guardar los cambios realizados al archivo?","Alerta",dialogButton);
-        if(dialogResult == JOptionPane.YES_OPTION){
+        int dialogResult = JOptionPane.showConfirmDialog(null, "¿Le gustaría guardar los cambios realizados al archivo?", "Alerta", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
             archivo.escribirArchivo();
             JOptionPane.showMessageDialog(this, "El archivo se guardó con éxito");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "El archivo se cerró con éxito");
             openfile = false;
             ArchivoAbierto();
@@ -573,8 +558,8 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         String registro;
-        for(int i = 0; i < archivo.getListaCampos().size();i++){
-            registro = JOptionPane.showInputDialog("Ingrese el "+archivo.getListaCampos().get(i) + ":");
+        for (int i = 0; i < archivo.getListaCampos().size(); i++) {
+            registro = JOptionPane.showInputDialog("Ingrese el " + archivo.getListaCampos().get(i) + ":");
             archivo.addRegistro(registro);
         }
         JOptionPane.showMessageDialog(this, "El registro ha sido agregado con éxito");
@@ -593,13 +578,31 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        archivo.escribirArchivo();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("./"));
+        FileNameExtensionFilter data = new FileNameExtensionFilter("ABC FILE", "abc");
+        fileChooser.setFileFilter(data);
+        int seleccion = fileChooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            try {
+                if (fileChooser.getFileFilter().getDescription().equals("ABC FILE")) {
+                    archivo.setPath(fileChooser.getSelectedFile().getPath());
+                    archivo.escribirArchivo();
+                    JOptionPane.showMessageDialog(null, "El archivo fue guardado exitósamente");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Solo puede guardar archivos ABC");
+                }
+            } catch (Exception e) {
+
+            }
+        }
+
         JOptionPane.showMessageDialog(this, "El archivo se guardó con éxito");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItemModificarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarCamposActionPerformed
         // TODO add your handling code here:
-        
+
         DefaultTableModel tabla = new DefaultTableModel();
         tabla.addColumn("Campo");
         tabla.addColumn("Tipo");
@@ -613,13 +616,13 @@ public class FramePrincipal extends javax.swing.JFrame {
         }
 
         jTable2.setModel(tabla);
-        
+
         jDModificarCampo.setModal(true);
         jDModificarCampo.pack();
         jDModificarCampo.setLocationRelativeTo(null);
         jDModificarCampo.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jMenuItemModificarCamposActionPerformed
 
     private void jMenuItemBorrarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemBorrarCamposActionPerformed
@@ -628,7 +631,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuItemModificarCamposKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenuItemModificarCamposKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenuItemModificarCamposKeyPressed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
@@ -636,9 +639,9 @@ public class FramePrincipal extends javax.swing.JFrame {
         DefaultTableModel tabla = new DefaultTableModel();
         try {
             if (evt.isMetaDown()) {
-                
+
                 PopMenuModificar.show(evt.getComponent(), evt.getX(), evt.getY());
-                
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Seleccione algo antes de dar click derecho");
@@ -648,8 +651,8 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void jMenuModificarCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuModificarCampoActionPerformed
         // TODO add your handling code here:
-         DefaultTableModel tabla = new DefaultTableModel();
-         
+        DefaultTableModel tabla = new DefaultTableModel();
+
         archivo.setNombre(JOptionPane.showInputDialog("Ingrese el nuevo nombre"));
         tabla.addColumn("Campo");
         tabla.addColumn("Tipo");
@@ -661,11 +664,10 @@ public class FramePrincipal extends javax.swing.JFrame {
             fila[1] = archivo.getListaCampos().get(i).tipo;
             tabla.addRow(fila);
         }
-         jTable2.setModel(tabla);
-         JOptionPane.showMessageDialog(jDModificarCampo, "Modificado con exito la tarea");
-         
-         
-        
+        jTable2.setModel(tabla);
+        JOptionPane.showMessageDialog(jDModificarCampo, "Modificado con exito la tarea");
+
+
     }//GEN-LAST:event_jMenuModificarCampoActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
@@ -676,11 +678,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         Object[] fila = new Object[tabla.getColumnCount()];
         int cont = 0;
         for (int i = 0; i < archivo.getListaRegistros().size(); i++) {
-            if(tabla.getColumnCount()-1 == cont){
+            if (tabla.getColumnCount() - 1 == cont) {
                 fila[cont] = archivo.getListaRegistros().get(i);
                 tabla.addRow(fila);
-                cont=0;
-            }else{
+                cont = 0;
+            } else {
                 fila[cont] = archivo.getListaRegistros().get(i);
                 cont++;
             }
@@ -688,16 +690,16 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jTable1.setModel(tabla);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
-    
-    public void ArchivoAbierto(){
-            jMenuCampos.setEnabled(openfile);
-            jMenu1.setEnabled(openfile);
-            jMenu2.setEnabled(openfile);
-            jMenu3.setEnabled(openfile);
-            jMenuItem2.setEnabled(openfile);
-            jMenuItem3.setEnabled(openfile);
+
+    public void ArchivoAbierto() {
+        jMenuCampos.setEnabled(openfile);
+        jMenu1.setEnabled(openfile);
+        jMenu2.setEnabled(openfile);
+        jMenu3.setEnabled(openfile);
+        jMenuItem2.setEnabled(openfile);
+        jMenuItem3.setEnabled(openfile);
     }
-    
+
     /**
      * @param args the command line arguments
      */

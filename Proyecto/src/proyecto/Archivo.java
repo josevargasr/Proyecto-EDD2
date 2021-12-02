@@ -58,6 +58,7 @@ public class Archivo{
     
     public void setPath(String path) {
         this.path = path;
+        archivo = new File(this.path+ ".abc");
     }
 
     public void setListaCampos(ArrayList<Campo> listaCampos) {
