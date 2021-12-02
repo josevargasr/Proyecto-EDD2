@@ -1,7 +1,9 @@
 package proyecto;
 
+import java.io.Serializable;
 
-public class Campo {
+
+public class Campo implements Serializable{
     String tipo;
     String nombre;
     int longitud;

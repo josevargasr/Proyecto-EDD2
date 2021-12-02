@@ -1,11 +1,15 @@
 package proyecto;
 
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Archivo {
+public class Archivo{
     private String nombre;
     private String path;
     File archivo = null;
@@ -25,6 +29,11 @@ public class Archivo {
     }
 
     public Archivo() {
+        
+    }
+    
+    public Archivo(String path) {
+        archivo = new File(path);
     }
 
     public String getNombre() {
@@ -84,6 +93,30 @@ public class Archivo {
                 fw.close();
             } catch (Exception ex) {
             }
+        }
+    }
+    
+    public void cargarArchivo() {
+        try {            
+            listaCampos = new ArrayList();
+            Campo temp;
+            if (archivo.exists()) {
+                  FileInputStream entrada
+                    = new FileInputStream(archivo);
+                ObjectInputStream objeto
+                    = new ObjectInputStream(entrada);
+                try {
+                    while ((temp = (Campo) objeto.readObject()) != null) {
+                        listaCampos.add(temp);
+                    }
+                } catch (EOFException e) {
+                    //encontro el final del archivo
+                }
+                objeto.close();
+                entrada.close();
+            } //fin if           
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

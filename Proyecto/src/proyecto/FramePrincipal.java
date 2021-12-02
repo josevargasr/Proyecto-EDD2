@@ -5,9 +5,13 @@
  */
 package proyecto;
 
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -528,14 +532,19 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemListarCamposActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        archivo = new Archivo("./pruebaabrir.abc");
+        archivo.cargarArchivo();
+        JOptionPane.showMessageDialog(this, "El archivo se abrió con éxito");
+        openfile = true;
+        ArchivoAbierto();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog (null, "¿Le gustaría guardar los cambios realizados al archivo?","Alerta",dialogButton);
         if(dialogResult == JOptionPane.YES_OPTION){
-            
+            archivo.escribirArchivo();
+            JOptionPane.showMessageDialog(this, "El archivo se guardó con éxito");
         }else{
             JOptionPane.showMessageDialog(this, "El archivo se cerró con éxito");
             openfile = false;
@@ -569,7 +578,8 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+        archivo.escribirArchivo();
+        JOptionPane.showMessageDialog(this, "El archivo se guardó con éxito");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItemModificarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarCamposActionPerformed
