@@ -37,6 +37,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         bg.add(jRadioButtonSi);
         bg.add(jRadioButtonNo);
         jRadioButtonNo.setSelected(true);
+        archivo_nuevo = false;
     }
 
     /**
@@ -491,6 +492,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         archivo = new Archivo();
         JOptionPane.showMessageDialog(null, "El archivo fue creado exitósamente");
         openfile = true;
+        archivo_nuevo = true;
         ArchivoAbierto();
 
     }//GEN-LAST:event_jMenuItemNuevoArchivoActionPerformed
@@ -529,6 +531,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                     archivo.cargarArchivo();
                     JOptionPane.showMessageDialog(null, "El archivo se abrio exitósamente");
                     openfile = true;
+                    archivo_nuevo = false;
                     ArchivoAbierto();
                 } else {
                     JOptionPane.showMessageDialog(this, "Solo puede crear archivos ABC");
@@ -543,12 +546,15 @@ public class FramePrincipal extends javax.swing.JFrame {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(null, "¿Le gustaría guardar los cambios realizados al archivo?", "Alerta", dialogButton);
         if (dialogResult == JOptionPane.YES_OPTION) {
-            archivo.escribirArchivo();
-            JOptionPane.showMessageDialog(this, "El archivo se guardó con éxito");
+            GuardarArchivo();
         } else {
             JOptionPane.showMessageDialog(this, "El archivo se cerró con éxito");
+            archivo = null;
             openfile = false;
             ArchivoAbierto();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            model.setColumnCount(0);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -578,26 +584,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("./"));
-        FileNameExtensionFilter data = new FileNameExtensionFilter("ABC FILE", "abc");
-        fileChooser.setFileFilter(data);
-        int seleccion = fileChooser.showSaveDialog(this);
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            try {
-                if (fileChooser.getFileFilter().getDescription().equals("ABC FILE")) {
-                    archivo.setPath(fileChooser.getSelectedFile().getPath());
-                    archivo.escribirArchivo();
-                    JOptionPane.showMessageDialog(null, "El archivo fue guardado exitósamente");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Solo puede guardar archivos ABC");
-                }
-            } catch (Exception e) {
-
-            }
-        }
-
-        JOptionPane.showMessageDialog(this, "El archivo se guardó con éxito");
+        GuardarArchivo();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItemModificarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarCamposActionPerformed
@@ -700,6 +687,33 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem3.setEnabled(openfile);
     }
 
+    public void GuardarArchivo() {
+        if (archivo_nuevo) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File("./"));
+            FileNameExtensionFilter data = new FileNameExtensionFilter("ABC FILE", "abc");
+            fileChooser.setFileFilter(data);
+            int seleccion = fileChooser.showSaveDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                try {
+                    if (fileChooser.getFileFilter().getDescription().equals("ABC FILE")) {
+                        archivo.setPath(fileChooser.getSelectedFile().getPath());
+                        archivo.escribirArchivo();
+                        JOptionPane.showMessageDialog(null, "El archivo fue guardado exitósamente");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Solo puede guardar archivos ABC");
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+        } else {
+            archivo.escribirArchivo();
+            JOptionPane.showMessageDialog(this, "El archivo se guardó con éxito");
+        }
+        archivo_nuevo = false;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -785,4 +799,5 @@ public class FramePrincipal extends javax.swing.JFrame {
     Archivo archivo;
     Campo nodo_campo;
     boolean openfile;
+    boolean archivo_nuevo;
 }
