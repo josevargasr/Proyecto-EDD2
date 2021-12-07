@@ -124,6 +124,8 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jLabel5.setText("Longitud del Campo:");
 
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 50, 1));
+
         javax.swing.GroupLayout jDCrearCampoLayout = new javax.swing.GroupLayout(jDCrearCampo.getContentPane());
         jDCrearCampo.getContentPane().setLayout(jDCrearCampoLayout);
         jDCrearCampoLayout.setHorizontalGroup(
@@ -478,6 +480,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGuardarCampoMouseClicked
 
     private void jMenuItemNuevoCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevoCampoActionPerformed
+        jRadioButtonNo.setSelected(true);
+        jComboBox1.setSelectedIndex(0);
+        
         jDCrearCampo.setModal(true);
         jDCrearCampo.pack();
         jDCrearCampo.setLocationRelativeTo(null);
@@ -547,15 +552,18 @@ public class FramePrincipal extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showConfirmDialog(null, "¿Le gustaría guardar los cambios realizados al archivo?", "Alerta", dialogButton);
         if (dialogResult == JOptionPane.YES_OPTION) {
             GuardarArchivo();
+            archivo = null;
+            openfile = false;
+            ArchivoAbierto();
         } else {
             JOptionPane.showMessageDialog(this, "El archivo se cerró con éxito");
             archivo = null;
             openfile = false;
             ArchivoAbierto();
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            model.setColumnCount(0);
         }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.setColumnCount(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -699,6 +707,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                     if (fileChooser.getFileFilter().getDescription().equals("ABC FILE")) {
                         archivo.setPath(fileChooser.getSelectedFile().getPath());
                         archivo.escribirArchivo();
+                        archivo_nuevo = false;
                         JOptionPane.showMessageDialog(null, "El archivo fue guardado exitósamente");
                     } else {
                         JOptionPane.showMessageDialog(this, "Solo puede guardar archivos ABC");
@@ -711,7 +720,6 @@ public class FramePrincipal extends javax.swing.JFrame {
             archivo.escribirArchivo();
             JOptionPane.showMessageDialog(this, "El archivo se guardó con éxito");
         }
-        archivo_nuevo = false;
     }
 
     /**
