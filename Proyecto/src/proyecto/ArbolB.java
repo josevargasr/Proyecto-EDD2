@@ -1,7 +1,6 @@
 package proyecto;
 
 import java.io.Serializable;
-import java.util.Queue;
 
 public class ArbolB implements Serializable {
 
@@ -10,7 +9,6 @@ public class ArbolB implements Serializable {
 
     ArbolB() {
         root = null;
-
     }
 
     void traverse() {
@@ -21,7 +19,7 @@ public class ArbolB implements Serializable {
     }
 
     void PrintLevels() {
-        try{
+        try {
             if (root != null) {
                 for (int i = 0; i < root.n; i++) {
                     if (root.key[i] != null) {
@@ -31,43 +29,38 @@ public class ArbolB implements Serializable {
 
                 System.out.println("");
                 if (root.hijos != null) {
-                    for (int i = 0; i < root.hijos.length; i++) {
-                        if (root.hijos[i] != null) {
-                            for (int j = 0; j < root.hijos[i].n; j++) {
-                                if (root.hijos[i].key[j] != null) {
-                                    System.out.print(root.hijos[i].key[j]);
+                    for (NodoB hijo : root.hijos) {
+                        if (hijo != null) {
+                            for (int j = 0; j < hijo.n; j++) {
+                                if (hijo.key[j] != null) {
+                                    System.out.print(hijo.key[j]);
                                 }
                             }
                             System.out.print("|");
                         }
-
                     }
                     System.out.println("");
-                    for (int i = 0; i < root.hijos.length; i++) {
-                        if (root.hijos[i] != null) {
-                            for (int j = 0; j < root.hijos[i].n; j++) {
-                                if (root.hijos[i].hijos[j] != null) {
-                                    for (int k = 0; k < root.hijos[i].hijos[j].n + 1; k++) {
-                                        if (root.hijos[i].hijos[j].key[k] != null) {
-                                            System.out.print(root.hijos[i].hijos[j].key[k]);
-
+                    for (NodoB hijo : root.hijos) {
+                        if (hijo != null) {
+                            for (int j = 0; j < hijo.n; j++) {
+                                if (hijo.hijos[j] != null) {
+                                    for (int k = 0; k < hijo.hijos[j].n + 1; k++) {
+                                        if (hijo.hijos[j].key[k] != null) {
+                                            System.out.print(hijo.hijos[j].key[k]);
                                         }
-
                                     }
                                     System.out.print("|");
                                 }
-
                             }
                             System.out.print("|");
                         }
-
                     }
 
                 }
             }
-            }catch(Exception x){
-                
-            }
+        } catch (Exception x) {
+
+        }
 
     }
 
@@ -80,7 +73,7 @@ public class ArbolB implements Serializable {
     }
 
     void insert(Registro r) {
-        
+
         if (root == null) {
             root = new NodoB(t, true);
             root.key[0] = r;

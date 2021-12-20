@@ -64,8 +64,8 @@ public class AdminCampo  extends Archivo {
 
             System.out.print(ubicacion);
             System.out.print((char) file.readByte());
-            long size = file.readLong();
-            System.out.print(size);
+            long tam = file.readLong();
+            System.out.print(tam);
             System.out.print((char) file.readByte());
             String nombre = "";
             String acumulador = "";
@@ -92,7 +92,7 @@ public class AdminCampo  extends Archivo {
             c.setLlave(key);
             c.agregarNombre(nombre);
             c.setTipoCampo(tipo);
-            c.setTamByte(size);
+            c.setTamByte(tam);
             c.setTam(ubicacion);
 
             Camps.add(c);

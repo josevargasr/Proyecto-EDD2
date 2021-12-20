@@ -7,7 +7,6 @@ import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,13 +14,10 @@ import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.util.ArrayList;
-import javax.swing.CellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -49,9 +45,6 @@ public class Main extends javax.swing.JFrame {
     public void Cargar_Archivo() {
         FileSuccess = 0;
         String direction;
-
-        //Creo un nuevo JFileChooser para que eliga donde guardar.
-        //Le digo que aparezca en el home del proyecto .. Crea un problema que la Metadata se puede guardar en cualquier sitio.
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("./"));
         FileNameExtensionFilter data = new FileNameExtensionFilter("DAT FILE", "dat");
@@ -512,48 +505,6 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (Exception ex) {
-        }
-    }
-
-    public static void exportXML(ArrayList Campos, ArrayList Regs, String Direccion) {
-
-        Document document = null;
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            DOMImplementation implementation = builder.getDOMImplementation();
-            document = implementation.createDocument(null, "xml", null);
-
-            for (int i = 0; i < Regs.size(); i++) {
-                Element registro = document.createElement("Registro" + i);
-                document.getDocumentElement().appendChild(registro);
-                ArrayList<Element> elementos = new ArrayList();
-
-                for (int j = 0; j < Campos.size(); j++) {
-                    Element campos = document.createElement(Campos.get(j).toString());
-                    elementos.add(campos);
-                }
-
-                for (int h = 0; h < elementos.size(); h++) {
-                    registro.appendChild(elementos.get(h));
-                    Text valorCampo = document.createTextNode(Regs.get(h).toString());
-                    elementos.get(h).appendChild(valorCampo);
-                    document.setXmlVersion("1.0");
-
-                }
-            }
-
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-
-            File archivo = new File("./" + ".xml");
-
-            DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(archivo);
-            transformer.transform(source, result);
-
-        } catch (Exception e) {
-
         }
     }
 
@@ -1098,6 +1049,7 @@ public class Main extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1121,7 +1073,6 @@ public class Main extends javax.swing.JFrame {
 
         jm_Archivo.setText("Archivo");
 
-        jmi_Nuevo_Archivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Nuevo archivo.png"))); // NOI18N
         jmi_Nuevo_Archivo.setText("Nuevo Archivo");
         jmi_Nuevo_Archivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1130,7 +1081,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Archivo.add(jmi_Nuevo_Archivo);
 
-        jmi_Cargar_Archivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cargar archivo.png"))); // NOI18N
         jmi_Cargar_Archivo.setText("Cargar Archivo");
         jmi_Cargar_Archivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1139,7 +1089,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Archivo.add(jmi_Cargar_Archivo);
 
-        jmi_Salvar_Archivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Salvar archivo.png"))); // NOI18N
         jmi_Salvar_Archivo.setText("Salvar Archivo");
         jmi_Salvar_Archivo.setEnabled(false);
         jmi_Salvar_Archivo.addActionListener(new java.awt.event.ActionListener() {
@@ -1149,7 +1098,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Archivo.add(jmi_Salvar_Archivo);
 
-        jmi_Cerrar_Archivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrar archivo.png"))); // NOI18N
         jmi_Cerrar_Archivo.setText("Cerrar Archivo");
         jmi_Cerrar_Archivo.setEnabled(false);
         jmi_Cerrar_Archivo.addActionListener(new java.awt.event.ActionListener() {
@@ -1159,7 +1107,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Archivo.add(jmi_Cerrar_Archivo);
 
-        jmi_Salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/log out.png"))); // NOI18N
         jmi_Salir.setText("Salir");
         jmi_Salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1173,7 +1120,6 @@ public class Main extends javax.swing.JFrame {
         jmi_Campos.setText("Campos");
         jmi_Campos.setEnabled(false);
 
-        jmi_Crear_Campo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/crear campo.png"))); // NOI18N
         jmi_Crear_Campo.setText("Crear Campo");
         jmi_Crear_Campo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1182,7 +1128,6 @@ public class Main extends javax.swing.JFrame {
         });
         jmi_Campos.add(jmi_Crear_Campo);
 
-        jmi_Modificar_Campo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/modificar1.png"))); // NOI18N
         jmi_Modificar_Campo.setText("Modificar Campo");
         jmi_Modificar_Campo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1191,7 +1136,6 @@ public class Main extends javax.swing.JFrame {
         });
         jmi_Campos.add(jmi_Modificar_Campo);
 
-        jmi_Borrar_Campo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Eliminar campo.jpg"))); // NOI18N
         jmi_Borrar_Campo.setText("Borrar Campo");
         jmi_Borrar_Campo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1200,7 +1144,6 @@ public class Main extends javax.swing.JFrame {
         });
         jmi_Campos.add(jmi_Borrar_Campo);
 
-        jmi_Listar_Campos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Listar campo.jpg"))); // NOI18N
         jmi_Listar_Campos.setText("Listar Campos");
         jmi_Listar_Campos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1214,7 +1157,6 @@ public class Main extends javax.swing.JFrame {
         jm_Registros.setText("Registros");
         jm_Registros.setEnabled(false);
 
-        jmi_Crear_Registro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/nueva tarea1.png"))); // NOI18N
         jmi_Crear_Registro.setText("Crear Registro");
         jmi_Crear_Registro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1223,7 +1165,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Registros.add(jmi_Crear_Registro);
 
-        jmi_Borrar_Registro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Eliminar1.png"))); // NOI18N
         jmi_Borrar_Registro.setText("Borrar Registro");
         jmi_Borrar_Registro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1232,7 +1173,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Registros.add(jmi_Borrar_Registro);
 
-        jmi_Buscar_Registro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar registro .jpg"))); // NOI18N
         jmi_Buscar_Registro.setText("Buscar Registro");
         jmi_Buscar_Registro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1241,7 +1181,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Registros.add(jmi_Buscar_Registro);
 
-        jmi_modreg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/modificar1.png"))); // NOI18N
         jmi_modreg.setText("Modificar Registro");
         jmi_modreg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1285,7 +1224,6 @@ public class Main extends javax.swing.JFrame {
         jm_Estandarizacion.setText("Estandarizacion");
         jm_Estandarizacion.setEnabled(false);
 
-        jmi_Exportar_Excel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Exportar excel.png"))); // NOI18N
         jmi_Exportar_Excel.setText("Exportar EXCEL");
         jmi_Exportar_Excel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1294,7 +1232,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Estandarizacion.add(jmi_Exportar_Excel);
 
-        jmi_Exportrar_XML.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/exportar XML.png"))); // NOI18N
         jmi_Exportrar_XML.setText("Exportar XML");
         jmi_Exportrar_XML.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1691,27 +1628,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_Exportar_ExcelActionPerformed
 
     private void jmi_Exportrar_XMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportrar_XMLActionPerformed
-        // TODO add your handling code here:
-        try {
-            if (file == null || metadata == null || metadata.getCampos() == null || metadata.getNumregistros() == 0) {
-                JOptionPane.showMessageDialog(null, "No hay informacion cargada");
-            } else {
-                String name = JOptionPane.showInputDialog(null, "Ingrese el nombre del exporte: ");
-                ArrayList registrost = new ArrayList();
-
-                for (int i = 0; i < Table.getRowCount(); i++) {
-                    ArrayList row = new ArrayList();
-                    for (int j = 0; j < Table.getColumnCount(); j++) {
-                        row.add(Table.getValueAt(i, j));
-                    }
-                    registrost.add(row);
-                }
-                exportXML(metadata.getCampos(), registrost, name);
-            }
-
-        } catch (Exception e) {
-            System.out.println("Could not export successfully");
-        }
+       
     }//GEN-LAST:event_jmi_Exportrar_XMLActionPerformed
 
     private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked

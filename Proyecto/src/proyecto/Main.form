@@ -603,9 +603,6 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Nuevo_Archivo">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/Nuevo archivo.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Nuevo Archivo"/>
               </Properties>
               <Events>
@@ -614,9 +611,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Cargar_Archivo">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/Cargar archivo.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Cargar Archivo"/>
               </Properties>
               <Events>
@@ -625,9 +619,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Salvar_Archivo">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/Salvar archivo.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Salvar Archivo"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
@@ -637,9 +628,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Cerrar_Archivo">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/cerrar archivo.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Cerrar Archivo"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
@@ -649,9 +637,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Salir">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/log out.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Salir"/>
               </Properties>
               <Events>
@@ -668,9 +653,6 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Crear_Campo">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/crear campo.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Crear Campo"/>
               </Properties>
               <Events>
@@ -679,9 +661,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Modificar_Campo">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/modificar1.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Modificar Campo"/>
               </Properties>
               <Events>
@@ -690,9 +669,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Borrar_Campo">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/Eliminar campo.jpg"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Borrar Campo"/>
               </Properties>
               <Events>
@@ -701,9 +677,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Listar_Campos">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/Listar campo.jpg"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Listar Campos"/>
               </Properties>
               <Events>
@@ -720,9 +693,6 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Crear_Registro">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/nueva tarea1.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Crear Registro"/>
               </Properties>
               <Events>
@@ -731,9 +701,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Borrar_Registro">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/Eliminar1.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Borrar Registro"/>
               </Properties>
               <Events>
@@ -742,9 +709,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Buscar_Registro">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/buscar registro .jpg"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Buscar Registro"/>
               </Properties>
               <Events>
@@ -753,9 +717,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_modreg">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/modificar1.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Modificar Registro"/>
               </Properties>
               <Events>
@@ -805,9 +766,6 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Exportar_Excel">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/Exportar excel.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Exportar EXCEL"/>
               </Properties>
               <Events>
@@ -816,9 +774,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmi_Exportrar_XML">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Iconos/exportar XML.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Exportar XML"/>
               </Properties>
               <Events>
@@ -832,6 +787,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jmb_Principal"/>
