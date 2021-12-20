@@ -1,6 +1,6 @@
 package proyecto;
 
-public class LinkedList {
+public class ListaEnlazada {
 
     Node head;
 

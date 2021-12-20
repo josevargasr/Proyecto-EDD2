@@ -18,18 +18,18 @@ public class Archivo {
     }
 
     // Apertura del fichero
-    public void abrir(AccesoCampo r)
+    public void abrir(AdminCampo r)
             throws IOException {
         file = new RandomAccessFile("MetaData.dat", "rw");
     }
 
-    public void escribir(AccesoCampo registro, Campos c) throws IOException {
+    public void escribir(AdminCampo registro, Campos c) throws IOException {
         if (file != null) {
             registro.writeCampo(file, c);
         }
     }
 
-    public void readC(AccesoCampo reg) throws IOException, ParseException {
+    public void readC(AdminCampo reg) throws IOException, ParseException {
         reg.readCampos(file);
 
     }
@@ -45,8 +45,8 @@ public class Archivo {
 
         return file.length();
     }
-    public void modificarC(AccesoCampo c,Campos p) throws IOException{
-        c.modificarCampo(file,p.size_dec
+    public void modificarC(AdminCampo c,Campos p) throws IOException{
+        c.modificarCampo(file,p.tam
                 ,p);
     }
 

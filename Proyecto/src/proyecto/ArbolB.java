@@ -3,12 +3,12 @@ package proyecto;
 import java.io.Serializable;
 import java.util.Queue;
 
-public class BTree implements Serializable {
+public class ArbolB implements Serializable {
 
-    BNode root;
+    NodoB root;
     int t = 3;
 
-    BTree() {
+    ArbolB() {
         root = null;
 
     }
@@ -71,7 +71,7 @@ public class BTree implements Serializable {
 
     }
 
-    BNode search(Registro k) {
+    NodoB search(Registro k) {
         if (root == null) {
             return null;
         } else {
@@ -82,20 +82,20 @@ public class BTree implements Serializable {
     void insert(Registro r) {
         
         if (root == null) {
-            root = new BNode(t, true);
+            root = new NodoB(t, true);
             root.key[0] = r;
             root.n = 1;
         } else {
             if (root.getN() == 2 * t - 1) {
 
-                BNode s = new BNode(t, false);
+                NodoB s = new NodoB(t, false);
 
                 s.hijos[0] = root;
 
                 s.splitChild(0, root);
 
                 int i = 0;
-                if (s.getKey(0).key < r.getKey()) {
+                if (s.getKey(0).llave < r.getLlave()) {
                     i++;
                 }
                 s.getHijos()[i].insertNonFull(r);
@@ -116,7 +116,7 @@ public class BTree implements Serializable {
         root.remove(k);
 
         if (root.n == 0) {
-            BNode tmp = root;
+            NodoB tmp = root;
             if (root.isLeaf()) {
                 root = null;
             } else {

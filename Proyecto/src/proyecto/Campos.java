@@ -3,49 +3,49 @@ package proyecto;
 
 public class Campos {
     
-    public char[] name;
-    public int FieldType;
-    public long sizeBytes;
-    public long size_dec;
-    public boolean key = false;
-    public String cadena = "123456789012345678901234567890";
+    public char[] nombre;
+    public int tipoCampo;
+    public long tamByte;
+    public long tam;
+    public boolean llave = false;
+    public String cad = "123456789012345678901234567890";
 
     public boolean entro = false;
 
     public Campos() {
         long Bytes_en_Caracteres = 5 + 1;
-        this.sizeBytes = 8 + 8 + 4 + Bytes_en_Caracteres + 1;
+        this.tamByte = 8 + 8 + 4 + Bytes_en_Caracteres + 1;
     }
 
     @SuppressWarnings("empty-statement")
     public Campos(int FieldType, long size_dec, boolean key) {
-        this.FieldType = FieldType;
+        this.tipoCampo = FieldType;
         long Bytes_en_Caracteres = 5 + 1;
-        this.sizeBytes = 8 + 8 + 4 + Bytes_en_Caracteres + 1;
-        this.size_dec = size_dec;
-        this.key = key;
+        this.tamByte = 8 + 8 + 4 + Bytes_en_Caracteres + 1;
+        this.tam = size_dec;
+        this.llave = key;
     }
 
     public boolean agregarNombre(String a) {
-        if (a.length() <= cadena.length()) {
+        if (a.length() <= cad.length()) {
             if (entro == false) {
-                name = new char[a.length()];
+                nombre = new char[a.length()];
                 for (int i = 0; i < a.length(); i++) {
-                    name[i] = a.charAt(i);
+                    nombre[i] = a.charAt(i);
                 }
-                sizeBytes += (a.length());
-                cadena = a;
+                tamByte += (a.length());
+                cad = a;
                 entro = true;
             } else {
-                for (int i = 0; i < cadena.length(); i++) {
+                for (int i = 0; i < cad.length(); i++) {
                     if (i < a.length()) {
-                        name[i] = a.charAt(i);
+                        nombre[i] = a.charAt(i);
                     } else {
-                        name[i] = ' ';
+                        nombre[i] = ' ';
                         a += " ";
                     }
                 }
-                cadena = a;
+                cad = a;
             }
             return true;
         } else {
@@ -54,53 +54,53 @@ public class Campos {
         }
     }
 
-    public char[] getName() {
-        return name;
+    public char[] getNombre() {
+        return nombre;
     }
 
     public char getChar(int x) {
-        return name[x];
+        return nombre[x];
     }
 
-    public void setName(char[] name) {
-        this.name = name;
+    public void setNombre(char[] nombre) {
+        this.nombre = nombre;
     }
 
-    public int getFieldType() {
-        return FieldType;
+    public int getTipoCampo() {
+        return tipoCampo;
     }
 
-    public void setFieldType(int FieldType) {
-        this.FieldType = FieldType;
+    public void setTipoCampo(int tipoCampo) {
+        this.tipoCampo = tipoCampo;
     }
 
     public Long getSizeBytes() {
-        return sizeBytes;
+        return tamByte;
     }
 
-    public void setSizeBytes(long sizeBytes) {
-        this.sizeBytes = sizeBytes;
+    public void setTamByte(long tamByte) {
+        this.tamByte = tamByte;
     }
 
     public Long getSize_dec() {
-        return size_dec;
+        return tam;
     }
 
-    public void setSize_dec(long size_dec) {
-        this.size_dec = size_dec;
+    public void setTam(long tam) {
+        this.tam = tam;
     }
 
-    public boolean isKey() {
-        return key;
+    public boolean isLlave() {
+        return llave;
     }
 
-    public void setKey(boolean key) {
-        this.key = key;
+    public void setLlave(boolean llave) {
+        this.llave = llave;
     }
 
     @Override
     public String toString() {
-        return cadena + "|" + FieldType + "|" + key;
+        return cad + "|" + tipoCampo + "|" + llave;
     }
 
 }

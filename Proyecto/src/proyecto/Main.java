@@ -133,14 +133,14 @@ public class Main extends javax.swing.JFrame {
                 ByteArrayInputStream in = new ByteArrayInputStream(data);
                 ObjectInputStream read = new ObjectInputStream(in);
                 Data d = (Data) read.readObject();
-                if (d.getSize_alter().contains("*")) {
+                if (d.getTam().contains("*")) {
                     eliminado = true;
-                    AvailList.BestFit(tamaño, d.ubicacion);
+                    AvailList.BestFit(tamaño, d.lugar);
 
                 } else {
                     Export2 = new ArrayList<>();
-                    Registro temporal = new Registro(d.getKey());
-                    temporal.setByteOffset(d.getUbicacion());
+                    Registro temporal = new Registro(d.getLlave());
+                    temporal.setByteOffset(d.getLugar());
                     metadata.getArbolB().insert(temporal);
                     for (int i = 0; i < d.getDatos().size(); i++) {
                         Export2.add(d.getDatos().get(i));
@@ -303,12 +303,12 @@ public class Main extends javax.swing.JFrame {
                 Data datos = new Data();
                 Registro temporal = new Registro(Integer.parseInt(info_registro.get(0).toString()));
                 long byteOffset = RAfile.length();
-                BNode d = metadata.getArbolB().search(temporal);
-                int x = searchEnNodo(d, temporal.getKey());
+                NodoB d = metadata.getArbolB().search(temporal);
+                int x = searchEnNodo(d, temporal.getLlave());
 
                 d.key[x].setByteOffset(byteOffset);
                 datos.setDatos(info_registro);
-                datos.setUbicacion(byteOffset);
+                datos.setLugar(byteOffset);
 
                 ByteArrayOutputStream obArray = new ByteArrayOutputStream();
                 ObjectOutputStream objeto = new ObjectOutputStream(obArray);
@@ -316,17 +316,17 @@ public class Main extends javax.swing.JFrame {
 
                 byte[] dat = obArray.toByteArray();
                 int required_size = dat.length;
-                LinkedList.Node espacio = AvailList.SearchSpace(required_size);
+                ListaEnlazada.Node espacio = AvailList.SearchSpace(required_size);
 
                 if (espacio == null) {
                     RAfile.seek(byteOffset);
                     RAfile.writeInt(dat.length);
                     RAfile.write(dat);
                 } else {
-                    datos.setUbicacion(espacio.posicion);
+                    datos.setLugar(espacio.posicion);
                     int j = 0;
                     for (int i = 0; i < (espacio.data - dat.length); i++) {
-                        datos.setSize_alter(datos.getSize_alter() + "|");
+                        datos.setTam(datos.getTam() + "|");
                         j++;
                     }
 
@@ -334,9 +334,9 @@ public class Main extends javax.swing.JFrame {
                     objeto = new ObjectOutputStream(obArray);
                     objeto.writeObject(datos);
                     dat = obArray.toByteArray();
-                    d.key[x].setByteOffset(datos.ubicacion);
+                    d.key[x].setByteOffset(datos.lugar);
 
-                    RAfile.seek(datos.ubicacion);
+                    RAfile.seek(datos.lugar);
                     RAfile.writeInt(dat.length);
                     RAfile.write(dat);
                     AvailList.deleteNode(AvailList.head, espacio);
@@ -345,12 +345,12 @@ public class Main extends javax.swing.JFrame {
                 Data datos = new Data();
                 Registro temporal = new Registro(Integer.parseInt(info_registro.get(0).toString()));
                 long byteOffset = RAfile.length();
-                BNode d = metadata.getArbolB().search(temporal);
-                int x = searchEnNodo(d, temporal.getKey());
+                NodoB d = metadata.getArbolB().search(temporal);
+                int x = searchEnNodo(d, temporal.getLlave());
 
                 d.key[x].setByteOffset(byteOffset);
                 datos.setDatos(info_registro);
-                datos.setUbicacion(byteOffset);
+                datos.setLugar(byteOffset);
 
                 ByteArrayOutputStream obArray = new ByteArrayOutputStream();
                 ObjectOutputStream objeto = new ObjectOutputStream(obArray);
@@ -383,8 +383,8 @@ public class Main extends javax.swing.JFrame {
     public Data Buscar_Dato_Archivo(Registro r) throws IOException, ClassNotFoundException {
 
         if (metadata.getArbolB().search(r) != null) {
-            BNode contenido = metadata.getArbolB().search(r);
-            int pos = searchEnNodo(contenido, r.getKey());
+            NodoB contenido = metadata.getArbolB().search(r);
+            int pos = searchEnNodo(contenido, r.getLlave());
             long byteOffset = contenido.key[pos].byteOffset;
             RAfile.seek(byteOffset);
             int tamaño = RAfile.readInt();
@@ -401,12 +401,12 @@ public class Main extends javax.swing.JFrame {
 
     }
 
-    public int searchEnNodo(BNode d, int key) {
+    public int searchEnNodo(NodoB d, int key) {
 
         int pos = 0;
         if (d != null) {
             for (int i = 0; i < d.n; i++) {
-                if (d.key[i].getKey() == key) {
+                if (d.key[i].getLlave() == key) {
                     break;
                 } else {
                     pos++;
@@ -425,14 +425,14 @@ public class Main extends javax.swing.JFrame {
             if (Buscar_Dato_Archivo(temporal) != null) {
 
                 Data temp = Buscar_Dato_Archivo(temporal);
-                RAfile.seek(temp.ubicacion);
+                RAfile.seek(temp.lugar);
                 int size_act = RAfile.readInt();
-                temp.setSize_alter("*");
-                temp.size_alter = "*";
-                BNode b = metadata.ArbolB.search(temporal);
-                int pos = searchEnNodo(b, temporal.key);
+                temp.setTam("*");
+                temp.tam = "*";
+                NodoB b = metadata.ArbolB.search(temporal);
+                int pos = searchEnNodo(b, temporal.llave);
                 long ubicacion = b.key[pos].getByteOffset();
-                temp.ubicacion = ubicacion;
+                temp.lugar = ubicacion;
 
                 ByteArrayOutputStream obArray = new ByteArrayOutputStream();
                 ObjectOutputStream objeto = new ObjectOutputStream(obArray);
@@ -444,7 +444,7 @@ public class Main extends javax.swing.JFrame {
                 byte[] dat2 = obArray.toByteArray();
                 RAfile.write(dat2);
 
-                AvailList.BestFit(size_act, temp.ubicacion);
+                AvailList.BestFit(size_act, temp.lugar);
                 AvailList.ImprimeListaEnlazada(AvailList.head);
                 metadata.ArbolB.remove(temporal);
 
@@ -458,14 +458,14 @@ public class Main extends javax.swing.JFrame {
             Registro temporal = new Registro(Integer.parseInt(Export.get(0).toString()));
             if (Buscar_Dato_Archivo(temporal) != null) {
                 Data temp = Buscar_Dato_Archivo(temporal);
-                temporal.setByteOffset(temp.ubicacion);
-                RAfile.seek(temp.ubicacion);
+                temporal.setByteOffset(temp.lugar);
+                RAfile.seek(temp.lugar);
                 int size_act = RAfile.readInt();
 
                 Data new_size = new Data();
-                new_size.setKey((int) Export.get(0));
+                new_size.setLlave((int) Export.get(0));
                 new_size.setDatos(Export);
-                new_size.setUbicacion(temp.getUbicacion());
+                new_size.setLugar(temp.getLugar());
                 ByteArrayOutputStream obArray = new ByteArrayOutputStream();
                 ObjectOutputStream objeto = new ObjectOutputStream(obArray);
                 objeto.writeObject(new_size);
@@ -473,7 +473,7 @@ public class Main extends javax.swing.JFrame {
 
                 if (dat.length <= size_act) {
                     for (int i = 0; i < (size_act - dat.length); i++) {
-                        new_size.setSize_alter(new_size.getSize_alter() + "|");
+                        new_size.setTam(new_size.getTam() + "|");
                     }
 
                     obArray = new ByteArrayOutputStream();
@@ -483,7 +483,7 @@ public class Main extends javax.swing.JFrame {
                     RAfile.write(dat);
 
                 } else {
-                    temp.setSize_alter("*");
+                    temp.setTam("*");
                     obArray = new ByteArrayOutputStream();
                     objeto = new ObjectOutputStream(obArray);
                     objeto.writeObject(temp);
@@ -492,7 +492,7 @@ public class Main extends javax.swing.JFrame {
 
                     long byteOffset = RAfile.length();
 
-                    new_size.setUbicacion(byteOffset);
+                    new_size.setLugar(byteOffset);
                     obArray = new ByteArrayOutputStream();
                     objeto = new ObjectOutputStream(obArray);
                     objeto.writeObject(new_size);
@@ -502,8 +502,8 @@ public class Main extends javax.swing.JFrame {
                     RAfile.writeInt(dat.length);
                     RAfile.write(dat);
 
-                    BNode tmp = metadata.getArbolB().search(temporal);
-                    int ubicacion = searchEnNodo(tmp, temp.getKey());
+                    NodoB tmp = metadata.getArbolB().search(temporal);
+                    int ubicacion = searchEnNodo(tmp, temp.getLlave());
                     tmp.key[ubicacion].byteOffset = byteOffset;
 
                     AvailList.BestFit(size_act, temporal.byteOffset);
@@ -1576,7 +1576,7 @@ public class Main extends javax.swing.JFrame {
         try {
             int Primarykey = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el PrimaryKey del registro a buscar."));
             Registro temporal = new Registro(Primarykey);
-            BNode x;
+            NodoB x;
             if ((x = metadata.getArbolB().search(temporal)) == null) {
                 JOptionPane.showMessageDialog(null, "No se pudo encontrar");
             } else {
@@ -1786,7 +1786,7 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (cbocampos.getSelectedIndex() >= 0) {
             Campo s = (Campo) cbocampos.getSelectedItem();
-            txtnuevo_Nombre.setText(s.getNombre());
+            txtnuevo_Nombre.setText(s.getNom());
             String Tipo = s.getTipo();
             if (Tipo.equals("Int")) {
                 cbonuevo_tipo.setSelectedIndex(1);
@@ -1819,7 +1819,7 @@ public class Main extends javax.swing.JFrame {
                     } else {
                         metodos.ModificarCampos(metadata, nuevo_nombre, nuevo_tipo, posicion);
                         BuildTable(metadata, 0);
-                        listcampos.get(posicion).setNombre(nuevo_nombre);
+                        listcampos.get(posicion).setNom(nuevo_nombre);
                         listcampos.get(posicion).setTipo(nuevo_tipo);
                     }
 
@@ -2111,7 +2111,7 @@ public class Main extends javax.swing.JFrame {
     int mode = -1;
     int rowRemoval;
     TableModel cleanTable;
-    LinkedList AvailList = new LinkedList();
+    ListaEnlazada AvailList = new ListaEnlazada();
     ArrayList<Object> Export2;
     int tablemodification;
     Object oldcellvalue;

@@ -2,20 +2,19 @@ package proyecto;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.text.DateFormat;
 import java.util.ArrayList;
 
-public class AccesoCampo  extends Archivo {
+public class AdminCampo  extends Archivo {
 
     public int size;
     public long numCampos;
     public ArrayList<Campos> Camps = new ArrayList<>();
 
-    public AccesoCampo() {
+    public AdminCampo() {
         numCampos = 0;
     }
 
-    public AccesoCampo(int size, int numCampos) {
+    public AdminCampo(int size, int numCampos) {
         this.size = size;
         this.numCampos = numCampos;
     }
@@ -90,11 +89,11 @@ public class AccesoCampo  extends Archivo {
             System.out.print(key);
             file.skipBytes(2);
             System.out.println("");
-            c.setKey(key);
+            c.setLlave(key);
             c.agregarNombre(nombre);
-            c.setFieldType(tipo);
-            c.setSizeBytes(size);
-            c.setSize_dec(ubicacion);
+            c.setTipoCampo(tipo);
+            c.setTamByte(size);
+            c.setTam(ubicacion);
 
             Camps.add(c);
 
@@ -122,19 +121,19 @@ public class AccesoCampo  extends Archivo {
 
         file.seek(file.length());
         String name = "";
-        long size_total = c.sizeBytes;
+        long size_total = c.tamByte;
         file.writeLong(file.length());
         file.writeBytes("|");
         file.writeLong(size_total);
         file.writeBytes("|");
-        for (int i = 0; i < c.cadena.length(); i++) {
-            char string[] = c.getName();
+        for (int i = 0; i < c.cad.length(); i++) {
+            char string[] = c.getNombre();
             file.writeByte(string[i]);
         }
         file.writeBytes("|");
-        file.writeInt(c.FieldType);
+        file.writeInt(c.tipoCampo);
         file.writeBytes("|");
-        file.writeBoolean(c.key);
+        file.writeBoolean(c.llave);
         file.writeBytes(System.getProperty("line.separator"));
         numCampos++;
         file.seek(0);
@@ -144,8 +143,8 @@ public class AccesoCampo  extends Archivo {
     public void modificarCampo(RandomAccessFile file, long ubicacion,Campos c) throws IOException {
         file.seek(ubicacion);
         file.skipBytes(8 + 1 + 8 + 1);
-        for (int i = 0; i < c.cadena.length(); i++) {
-            char string[] = c.getName();
+        for (int i = 0; i < c.cad.length(); i++) {
+            char string[] = c.getNombre();
             file.writeByte(string[i]);
         }
     }

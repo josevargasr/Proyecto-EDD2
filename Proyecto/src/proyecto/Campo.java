@@ -3,14 +3,12 @@ package proyecto;
 
 public class Campo {
     String tipo;
-    String nombre;
+    String nom;
     
 
     public Campo(String nombre, String tipo) {
-        this.nombre = nombre;
-        this.tipo = tipo;
-        
-        
+        this.nom = nombre;
+        this.tipo = tipo;        
     }
 
     public Campo() {
@@ -24,17 +22,17 @@ public class Campo {
         this.tipo = tipo;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNom() {
+        return nom;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     
     @Override
     public String toString() {
-        return  nombre;
+        return  nom;
     }
 }

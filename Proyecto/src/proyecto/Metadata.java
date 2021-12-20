@@ -23,19 +23,19 @@ public class Metadata implements Serializable {
     
     private int numregistros = 0;
     private long Campos_en_Archivo;
-    BTree ArbolB;
+    ArbolB ArbolB;
     private int sizeMeta;
 
-    public BTree getArbolB() {
+    public ArbolB getArbolB() {
         return ArbolB;
     }
 
-    public void setArbolB(BTree ArbolB) {
+    public void setArbolB(ArbolB ArbolB) {
         this.ArbolB = ArbolB;
     }
 
     public Metadata() {
-       ArbolB = new BTree();
+       ArbolB = new ArbolB();
     }
 
     public int getSizeMeta() {

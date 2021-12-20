@@ -4,19 +4,19 @@ package proyecto;
 import java.io.Serializable;
 
 
-public class BNode implements Serializable{
+public class NodoB implements Serializable{
 
     Registro[] key;
     int t;     
-    BNode[] hijos; 
+    NodoB[] hijos; 
     int n;      
     boolean leaf; 
 
-    public BNode(int _t, boolean _leaf) {
+    public NodoB(int _t, boolean _leaf) {
         t = _t;
         leaf = _leaf;
         key = new Registro[2 * t - 1];
-        hijos = new BNode[2 * t];
+        hijos = new NodoB[2 * t];
 
     }
 
@@ -44,11 +44,11 @@ public class BNode implements Serializable{
         this.t = t;
     }
 
-    public BNode[] getHijos() {
+    public NodoB[] getHijos() {
         return hijos;
     }
 
-    public void setHijos(BNode[] hijos) {
+    public void setHijos(NodoB[] hijos) {
         this.hijos = hijos;
     }
 
@@ -84,15 +84,15 @@ public class BNode implements Serializable{
     }
 
 
-    BNode search(Registro k) {
+    NodoB search(Registro k) {
         int i = 0;
  
         for (i = 0; i < n; i++) {
-            if (key[i].getKey() >= k.getKey()) {
+            if (key[i].getLlave() >= k.getLlave()) {
                 break;
             }
         }
-        if (i < n && key[i].getKey() == k.getKey()) {
+        if (i < n && key[i].getLlave() == k.getLlave()) {
             return this;
         }
         if (leaf == true) {
@@ -104,7 +104,7 @@ public class BNode implements Serializable{
     void insertNonFull(Registro k) {
         int i = n - 1;
         if (leaf == true) {
-            while (i >= 0 && key[i].getKey() > k.getKey()) {
+            while (i >= 0 && key[i].getLlave() > k.getLlave()) {
                 key[i + 1] = key[i];
                 i--;
             }
@@ -112,14 +112,14 @@ public class BNode implements Serializable{
             key[i + 1] = k;
             n = n + 1;
         } else {
-            while (i >= 0 && key[i].getKey() > k.getKey()) {
+            while (i >= 0 && key[i].getLlave() > k.getLlave()) {
                 i--;
             }
 
             if (hijos[i + 1].getN() == 2 * t - 1) {
                 splitChild(i + 1, hijos[i + 1]);
 
-                if (key[i + 1].getKey() < k.getKey()) {
+                if (key[i + 1].getLlave() < k.getLlave()) {
                     i++;
                 }
             }
@@ -128,9 +128,9 @@ public class BNode implements Serializable{
 
     }
 
-    void splitChild(int i, BNode y) {
+    void splitChild(int i, NodoB y) {
 
-        BNode z = new BNode(y.getT(), y.isLeaf());
+        NodoB z = new NodoB(y.getT(), y.isLeaf());
         z.setN(t - 1);
 
         for (int j = 0; j < t - 1; j++) 
@@ -166,7 +166,7 @@ public class BNode implements Serializable{
 
     public int findKey(Registro k) {
         int idx = 0;
-        while ((idx < n) && (key[idx].getKey() < k.getKey())) {
+        while ((idx < n) && (key[idx].getLlave() < k.getLlave())) {
             ++idx;
         }
         return idx;
@@ -175,7 +175,7 @@ public class BNode implements Serializable{
     void remove(Registro k) {
         int idx = findKey(k);
 
-        if (idx < n && key[idx].getKey() == k.getKey()) {
+        if (idx < n && key[idx].getLlave() == k.getLlave()) {
 
             if (leaf) {
                 removeFromLeaf(idx);
@@ -185,7 +185,7 @@ public class BNode implements Serializable{
         } else {
 
             if (leaf) {
-                System.out.println("El Registro [ " + k.getKey() + " ] no existe en el Arbol");
+                System.out.println("El Registro [ " + k.getLlave() + " ] no existe en el Arbol");
                 return;
             }
 
@@ -232,7 +232,7 @@ public class BNode implements Serializable{
     }
 
     Registro getPred(int idx) {
-        BNode cur = hijos[idx];
+        NodoB cur = hijos[idx];
         while (!cur.isLeaf()) {
             cur = cur.hijos[cur.n];
         }
@@ -241,7 +241,7 @@ public class BNode implements Serializable{
 
     Registro getSucc(int idx) {
 
-        BNode cur = hijos[idx + 1];
+        NodoB cur = hijos[idx + 1];
         while (!cur.leaf) {
             cur = cur.hijos[0];
         }
@@ -266,8 +266,8 @@ public class BNode implements Serializable{
 
     void borrowFromPrev(int idx) {
 
-        BNode child = hijos[idx];
-        BNode sibling = hijos[idx - 1];
+        NodoB child = hijos[idx];
+        NodoB sibling = hijos[idx - 1];
 
         for (int i = child.n - 1; i >= 0; --i) {
             child.key[i + 1] = child.key[i];
@@ -295,8 +295,8 @@ public class BNode implements Serializable{
 
     void borrowFromNext(int idx) {
 
-        BNode child = hijos[idx];
-        BNode sibling = hijos[idx + 1];
+        NodoB child = hijos[idx];
+        NodoB sibling = hijos[idx + 1];
 
         child.key[(child.getN())] = key[idx];
 
@@ -323,8 +323,8 @@ public class BNode implements Serializable{
     }
 
     void merge(int idx) {
-        BNode child = hijos[idx];
-        BNode sibling = hijos[idx + 1];
+        NodoB child = hijos[idx];
+        NodoB sibling = hijos[idx + 1];
 
         child.key[t - 1] = key[idx];
 

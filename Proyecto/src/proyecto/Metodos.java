@@ -1,6 +1,7 @@
 package proyecto;
 
 
+import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,37 +15,18 @@ import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeMap;
 import javax.swing.JOptionPane;
-import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class Metodos {
 
     ArrayList<String> campos = new ArrayList<String>();
-    ArrayList<String> types = new ArrayList<String>();
-    ArrayList<String> key_s = new ArrayList<String>();
+    ArrayList<String> tipos = new ArrayList<String>();
+    ArrayList<String> llave = new ArrayList<String>();
 
-    static Scanner read = new Scanner(System.in);
+    static Scanner input = new Scanner(System.in);
 
     public Metodos() {
 
@@ -106,9 +88,7 @@ public class Metodos {
 
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-
+        } catch (IOException e) {
         }
         br.close();
         bw.close();
@@ -127,7 +107,7 @@ public class Metodos {
             fis = new FileInputStream(file);
             ois = new ObjectInputStream(fis);
 
-        } catch (Exception e) {
+        } catch (IOException e) {
 
         }
 
@@ -144,23 +124,21 @@ public class Metodos {
             ous = new ObjectOutputStream(fis);
 
             ous.writeObject(meta);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
         }
         try {
             ous.close();
             fis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
         }
     }
 
     public void CreateCampos(Metadata metadata, String nombre, String tipo, int contador, String keyS) throws IOException, ParseException {
         if (metadata.getNumregistros() == 0) {
-            types.add(contador, tipo);
+            tipos.add(contador, tipo);
             campos.add(contador, nombre);
             metadata.setCampos(campos);
-            metadata.setTipos(types);
+            metadata.setTipos(tipos);
             metadata.setLlave_secundaria(keyS);
             metadata.setNombre(campos.toString());
             JOptionPane.showMessageDialog(null, "Se agrego el campo a la tabla.");
@@ -173,21 +151,21 @@ public class Metodos {
     public void ModificarCampos(Metadata metadata, String nuevo_nombre, String nuevo_tipo, int posicion) {
         if (metadata.getNumregistros() == 0) {
             try {
-                int campo = posicion;
-                ArrayList campos = metadata.getCampos();
-                ArrayList tipos = metadata.getTipos();
-                if (campo >= 0 && campo < campos.size() && campo == 0) {
-                    campos.set(campo, nuevo_nombre);
-                    metadata.setCampos(campos);
+                int CP = posicion;
+                ArrayList camps = metadata.getCampos();
+                ArrayList tipo = metadata.getTipos();
+                if (CP >= 0 && CP < camps.size() && CP == 0) {
+                    camps.set(CP, nuevo_nombre);
+                    metadata.setCampos(camps);
                     JOptionPane.showMessageDialog(null, "Success! Check Table");
-                } else if (campo >= 0 && campo < campos.size()) {
-                    campos.set(campo, nuevo_nombre);
-                    tipos.set(campo, nuevo_tipo);
+                } else if (CP >= 0 && CP < camps.size()) {
+                    camps.set(CP, nuevo_nombre);
+                    tipo.set(CP, nuevo_tipo);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid Size");
                 }
 
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(null, "Incorret Value Inserted.");
             }
         }
@@ -197,16 +175,16 @@ public class Metodos {
     public void DeleteCampos(Metadata metadata, int posicion) {
         if (metadata.getNumregistros() == 0) {
             int campo = posicion;
-            ArrayList campos = metadata.getCampos();
-            ArrayList tipos = metadata.getTipos();
-            if (campo >= 0 && campo < campos.size()) {
+            ArrayList camps = metadata.getCampos();
+            ArrayList tipo = metadata.getTipos();
+            if (campo >= 0 && campo < camps.size()) {
                 if (campo == 1) {
                     JOptionPane.showMessageDialog(null, "No se puede borrar la llave primaria!");
                 } else {
-                    campos.remove(campo);
-                    tipos.remove(campo);
-                    metadata.setCampos(campos);
-                    metadata.setTipos(tipos);
+                    camps.remove(campo);
+                    tipo.remove(campo);
+                    metadata.setCampos(camps);
+                    metadata.setTipos(tipo);
                     JOptionPane.showMessageDialog(null, "Success Check table");
                 }
             } else {
@@ -214,55 +192,7 @@ public class Metodos {
             }
         }
     }
-
-//    public void ExportToExcel(Metadata metadata, String name, JTable table) {
-//        //Blank workbook
-//        XSSFWorkbook workbook = new XSSFWorkbook();
-//
-//        //Create a blank sheet
-//        XSSFSheet sheet = workbook.createSheet("Estructura de Datos");
-//        int registros = table.getModel().getRowCount();
-//
-//        Map<String, Object[]> data = new TreeMap<String, Object[]>();
-//        data.put("1", metadata.getCampos().toArray());
-//        for (int i = 0; i < registros; i++) {
-//            ArrayList Registro = new ArrayList();
-//            for (int j = 0; j < metadata.getCampos().size(); j++) {
-//                Registro.add(table.getValueAt(i, j));
-//            }
-//            data.put(Integer.toString(i + 2), Registro.toArray());
-//        }
-//
-//        //Iterate over data and write to sheet
-//        Set<String> keyset = data.keySet();
-//        int rownum = 0;
-//        for (String key : keyset) {
-//            Row row = sheet.createRow(rownum++);
-//            Object[] objArr = data.get(key);
-//            int cellnum = 0;
-//            for (Object obj : objArr) {
-//                Cell cell = row.createCell(cellnum++);
-//                if (obj instanceof String) {
-//                    cell.setCellValue((String) obj);
-//                } else if (obj instanceof Integer) {
-//                    cell.setCellValue((Integer) obj);
-//                }
-//
-//            }
-//        }
-//        try {
-//            //Write the workbook in file system
-//            File filer = new File(name += ".xlsx");
-//            filer.delete();
-//            filer.createNewFile();
-//            FileOutputStream out = new FileOutputStream(filer);
-//            workbook.write(out);
-//            out.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
+    
     public static boolean validaNumeroEnteroPositivo_Exp(String texto) {
         return texto.matches("^[0-9]+([\\.,][0-9]+)?$");
     }
@@ -275,7 +205,7 @@ public class Metodos {
     public void IntroducirRegistros(JTable tabla) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         String registro;
-        ArrayList<String> datos = new ArrayList<String>();
+        ArrayList<String> datos = new ArrayList<>();
         for (int i = 0; i < modelo.getColumnCount(); i++) {
             registro = JOptionPane.showInputDialog(null, "Ingrese " + modelo.getColumnName(i));
             datos.add(registro);

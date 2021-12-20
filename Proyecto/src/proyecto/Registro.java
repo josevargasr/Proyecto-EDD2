@@ -1,25 +1,24 @@
 package proyecto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Registro implements Serializable{
-    int key;
+    int llave;
     long byteOffset;
     
     public Registro() {
     }
  
     public Registro(int key) {
-        this.key = key;
+        this.llave = key;
     }
 
-    public int getKey() {
-        return key;
+    public int getLlave() {
+        return llave;
     }
 
-    public void setKey(int key) {
-        this.key = key;
+    public void setLlave(int llave) {
+        this.llave = llave;
     }
 
     public long getByteOffset() {
@@ -32,7 +31,7 @@ public class Registro implements Serializable{
     
     @Override
     public String toString() {
-        return key +"-";
+        return llave +"-";
     }
     
 }
