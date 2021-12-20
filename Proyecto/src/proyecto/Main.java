@@ -1,8 +1,8 @@
 package proyecto;
 
-
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -21,16 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Text;
 
 public class Main extends javax.swing.JFrame {
 
@@ -39,7 +30,7 @@ public class Main extends javax.swing.JFrame {
     ArrayList<Campo> listcampos = new ArrayList();
 
     public void Salvar_Archivo() {
-        JOptionPane.showMessageDialog(null, "Su file se ha guardado exitosamente! ...Always On Saving!");
+        JOptionPane.showMessageDialog(null, "Su file se ha salvado exitosamente");
     }
 
     public void Cargar_Archivo() {
@@ -51,30 +42,29 @@ public class Main extends javax.swing.JFrame {
         fileChooser.setFileFilter(data);
         int seleccion = fileChooser.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) { //Cuando le da guardar
-            File file = null;
+            File Archivo;
             try {
                 if (fileChooser.getFileFilter().getDescription().equals("DAT FILE")) { //Chequea si lo que quiere guardar es DAT FILE
                     direction = fileChooser.getSelectedFile().getPath() + ".dat";
-                    file = fileChooser.getSelectedFile();
-                    this.file = file;
-                    JOptionPane.showMessageDialog(null, "Sucess!");
+                    Archivo = fileChooser.getSelectedFile();
+                    this.file = Archivo;
+                    JOptionPane.showMessageDialog(null, "Enhorabuena!");
                     FileSuccess = 1;
                 } else {
-                    JOptionPane.showMessageDialog(this, "Unable to Load. Use DAT FILE.");
+                    JOptionPane.showMessageDialog(this, "No se pudo abrir asegurese que su archivo sea un archivo DAT.");
                 }
-             
-            } catch (Exception e) {
-                //e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Something Went Wrong! Contact System Administrator.");
+
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(this, "Hubo un problema.");
             }
             try {
-             
+
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Fatal error closing files.");
+                JOptionPane.showMessageDialog(this, "Hubo un error al cerrar el archivo.");
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Operation aborted!");
+            JOptionPane.showMessageDialog(null, "Operacion cancelada.");
         }
 
     }
@@ -153,18 +143,21 @@ public class Main extends javax.swing.JFrame {
     private void Nuevo_Archivo() {
 
         String direction;
-        int option = JOptionPane.showConfirmDialog(this, "Desea Salvar su Proceoso?");
+        int option = JOptionPane.showConfirmDialog(this, "Desea salvar?");
 
-        if (option == JOptionPane.NO_OPTION) {
-            Crear_Archivo();
-            if (FileSuccess == 1) {
-                metadata = new Metadata();
-                BuildTable(metadata, 1);
-            }
-
-        } else if (option == JOptionPane.YES_OPTION) {
-            Salvar_Archivo();
-        } else {
+        switch (option) {
+            case JOptionPane.NO_OPTION:
+                Crear_Archivo();
+                if (FileSuccess == 1) {
+                    metadata = new Metadata();
+                    BuildTable(metadata, 1);
+                }
+                break;
+            case JOptionPane.YES_OPTION:
+                Salvar_Archivo();
+                break;
+            default:
+                break;
         }
     }
 
@@ -180,51 +173,51 @@ public class Main extends javax.swing.JFrame {
 
         if (seleccion == JFileChooser.APPROVE_OPTION) {
 
-            File file = null;
+            File archivo = null;
             FileOutputStream fos = null;
             ObjectOutputStream ous = null;
 
             try {
                 if (fileChooser.getFileFilter().getDescription().equals("DAT FILE")) {
-                    direction = fileChooser.getSelectedFile().getPath().toString() + ".dat";
+                    direction = fileChooser.getSelectedFile().getPath() + ".dat";
                     direction = direction.replace(".dat", "");
                     direction += ".dat";
 
-                    file = new File(direction);
-                    if (file.length() == 0) {
+                    archivo = new File(direction);
+                    if (archivo.length() == 0) {
                         this.file = new File(direction);
-                        JOptionPane.showMessageDialog(this, "Sucesso!\n Cualquier progreso sin salvar se perdio");
+                        JOptionPane.showMessageDialog(this, "Enhorabuena!\n Cualquier cambio sin salvar no se puede recuperar");
                         jmi_Campos.setEnabled(true);
                         jm_Registros.setEnabled(true);
                         jm_indices.setEnabled(true);
                         jm_Estandarizacion.setEnabled(true);
                         jmi_Salvar_Archivo.setEnabled(true);
                         jmi_Cerrar_Archivo.setEnabled(true);
-                    } else if (file.exists()) {
-                        file.delete();
-                        file.createNewFile();
+                    } else if (archivo.exists()) {
+                        archivo.delete();
+                        archivo.createNewFile();
                         this.file = new File(direction);
-                        JOptionPane.showMessageDialog(this, "File OverWritten, New Length: " + file.length());
+                        JOptionPane.showMessageDialog(this, "File OverWritten, New Length: " + archivo.length());
                     }
                     FileSuccess = 1;
                 } else {
-                    JOptionPane.showMessageDialog(this, "Unable to save. Use DAT FILE.");
+                    JOptionPane.showMessageDialog(this, "No se puede salvar. Use DAT FILE.");
                 }
-                fos = new FileOutputStream(file);
+                fos = new FileOutputStream(archivo);
                 ous = new ObjectOutputStream(fos);
                 ous.flush();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Algo salio mal");
+            } catch (HeadlessException | IOException e) {
+                JOptionPane.showMessageDialog(this, "Error desconocido");
             }
             try {
                 ous.close();
                 fos.close();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Cerrando Archivos.");
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Operation aborted!");
+            JOptionPane.showMessageDialog(null, "Operacion cancelada!");
         }
     }
 
@@ -250,40 +243,43 @@ public class Main extends javax.swing.JFrame {
         Object[] insertarray = new Object[metadata.getCampos().size()];
         for (int i = 0; i < metadata.getCampos().size(); i++) {
             String temp = JOptionPane.showInputDialog(null, "Ingrese: " + metadata.getCampos().get(i).toString() + "\n Tipo:  " + metadata.getTipos().get(i).toString());
-            if (metadata.getTipos().get(i).toString().equals("Int")) {
-                insertarray[i] = Integer.parseInt(temp);
-
-            } else if (metadata.getTipos().get(i).toString().equals("long")) {
-                insertarray[i] = Long.parseLong(temp);
-            } else if (metadata.getTipos().get(i).toString().equals("String")) {
-                insertarray[i] = temp;
-            } else if (metadata.getTipos().get(i).toString().equals("Char")) {
-                insertarray[i] = temp.charAt(0);
+            switch (metadata.getTipos().get(i).toString()) {
+                case "Int":
+                    insertarray[i] = Integer.parseInt(temp);
+                    break;
+                case "long":
+                    insertarray[i] = Long.parseLong(temp);
+                    break;
+                case "String":
+                    insertarray[i] = temp;
+                    break;
+                case "Char":
+                    insertarray[i] = temp.charAt(0);
+                    break;
+                default:
+                    break;
             }
         }
 
         ArrayList export2 = new ArrayList();
 
-        for (int i = 0; i < insertarray.length; i++) {
-            export2.add(insertarray[i]);
-        }
+        export2.addAll(Arrays.asList(insertarray));
         Registro temporal = new Registro(Integer.parseInt(insertarray[0].toString()));
 
         if (metadata.getArbolB().search(temporal) == null) {
-                metadata.getArbolB().insert(temporal);
-                modelo.addRow(insertarray);
-                metadata.addnumregistros();
-                try {
-                    Escribir_Datos_Registro(export2);
-                    Buscar_Dato_Archivo(temporal);
-                } catch (Exception ex) {
-                }
+            metadata.getArbolB().insert(temporal);
+            modelo.addRow(insertarray);
+            metadata.addnumregistros();
+            try {
+                Escribir_Datos_Registro(export2);
+                Buscar_Dato_Archivo(temporal);
+            } catch (IOException | ClassNotFoundException ex) {
+            }
 
-                Table.setModel(modelo);
-            
+            Table.setModel(modelo);
 
         } else {
-            JOptionPane.showMessageDialog(null, "Una Instancia del Registro ya existe.");
+            JOptionPane.showMessageDialog(null, "Este registro ya existe.");
         }
 
     }
@@ -429,9 +425,6 @@ public class Main extends javax.swing.JFrame {
 
                 ByteArrayOutputStream obArray = new ByteArrayOutputStream();
                 ObjectOutputStream objeto = new ObjectOutputStream(obArray);
-
-                obArray = new ByteArrayOutputStream();
-                objeto = new ObjectOutputStream(obArray);
                 objeto.writeObject(temp);
 
                 byte[] dat2 = obArray.toByteArray();
@@ -442,7 +435,7 @@ public class Main extends javax.swing.JFrame {
                 metadata.ArbolB.remove(temporal);
 
             }
-        } catch (Exception ex) {
+        } catch (IOException | ClassNotFoundException | NumberFormatException ex) {
         }
     }
 
@@ -504,50 +497,47 @@ public class Main extends javax.swing.JFrame {
 
                 }
             }
-        } catch (Exception ex) {
+        } catch (IOException | ClassNotFoundException | NumberFormatException ex) {
         }
     }
 
     public void Cargar_Archivo_2() {
         FileSuccess2 = 0;
         String direction;
-
-        //Creo un nuevo JFileChooser para que eliga donde guardar.
-        //Le digo que aparezca en el home del proyecto .. Crea un problema que la Metadata se puede guardar en cualquier sitio.
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("./"));
         FileNameExtensionFilter data = new FileNameExtensionFilter("DAT FILE", "dat");
         fileChooser.setFileFilter(data);
         int seleccion = fileChooser.showOpenDialog(this);
-        if (seleccion == JFileChooser.APPROVE_OPTION) { //Cuando le da guardar
-            File file = null;
-          
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File Archivo;
+
             try {
-                if (fileChooser.getFileFilter().getDescription().equals("DAT FILE")) { //Chequea si lo que quiere guardar es DAT FILE
+                if (fileChooser.getFileFilter().getDescription().equals("DAT FILE")) {
                     direction = fileChooser.getSelectedFile().getPath() + ".dat";
-                    file = fileChooser.getSelectedFile();
-                    this.file2 = file;
+                    Archivo = fileChooser.getSelectedFile();
+                    this.file2 = Archivo;
                     JOptionPane.showMessageDialog(null, "Sucess!");
                     FileSuccess2 = 1;
                 } else {
-                    JOptionPane.showMessageDialog(this, "Unable to Load. Use DAT FILE.");
+                    JOptionPane.showMessageDialog(this, "El archivo no se cargo, asegurese que su archivo es de tipo DAT.");
                 }
-             
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Something Went Wrong! Contact System Administrator.");
+
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(this, "Hubo un error!");
             }
             try {
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Fatal error closing files.");
+                JOptionPane.showMessageDialog(this, "Error al cerrar archivo.");
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Operation aborted!");
+            JOptionPane.showMessageDialog(null, "Operacion cancelada!");
         }
 
     }
-    
-     public void CargarMetadatos_2() throws ClassNotFoundException {
+
+    public void CargarMetadatos_2() throws ClassNotFoundException {
         try {
             RAfile2 = new RandomAccessFile(file2, "rw");
             int tamaño = RAfile2.readInt();
@@ -560,10 +550,9 @@ public class Main extends javax.swing.JFrame {
         } catch (IOException ex) {
         }
     }
+
     public Main() {
         initComponents();
-        this.setTitle("Principal");
-        this.setExtendedState(MAXIMIZED_BOTH);
         metadata = new Metadata();
         //Setting up table default design.
         this.setLocationRelativeTo(null);
@@ -1302,7 +1291,7 @@ public class Main extends javax.swing.JFrame {
             jmi_Salvar_Archivo.setEnabled(false);
             jmi_Cerrar_Archivo.setEnabled(false);
             JOptionPane.showMessageDialog(null, "Cerrado Exitosamente", "Cerrado", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
+        } catch (HeadlessException | IOException e) {
             JOptionPane.showMessageDialog(null, "Error al cerrar", "ERROR_MESSAGE", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jmi_Cerrar_ArchivoActionPerformed
@@ -1361,11 +1350,9 @@ public class Main extends javax.swing.JFrame {
 
     private void jmi_Modificar_CampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Modificar_CampoActionPerformed
         // TODO add your handling code here:
-        for (int i = 0; i < listcampos.size(); i++) {
-            DefaultComboBoxModel modelo1;
-            modelo1 = new DefaultComboBoxModel(listcampos.toArray());
+        listcampos.stream().map((modelo1) -> new DefaultComboBoxModel(listcampos.toArray())).forEachOrdered((modelo1) -> {
             cbocampos.setModel(modelo1);
-        }
+        });
         JDMODIFICAR_CAMPOS.setModal(true);
         JDMODIFICAR_CAMPOS.pack();
         JDMODIFICAR_CAMPOS.setLocationRelativeTo(null);
@@ -1375,11 +1362,9 @@ public class Main extends javax.swing.JFrame {
 
     private void jmi_Borrar_CampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Borrar_CampoActionPerformed
         // TODO add your handling code here:
-        for (int i = 0; i < listcampos.size(); i++) {
-            DefaultComboBoxModel modelo1;
-            modelo1 = new DefaultComboBoxModel(listcampos.toArray());
+        listcampos.stream().map((modelo1) -> new DefaultComboBoxModel(listcampos.toArray())).forEachOrdered((modelo1) -> {
             cboEliminar.setModel(modelo1);
-        }
+        });
         JDELIMINAR_CAMPOS.setModal(true);
         JDELIMINAR_CAMPOS.pack();
         JDELIMINAR_CAMPOS.setLocationRelativeTo(null);
@@ -1388,8 +1373,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_Borrar_CampoActionPerformed
 
     private void jmi_Listar_CamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Listar_CamposActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "El primer campo es campo llave");
+        JOptionPane.showMessageDialog(this, "El primer campo es el campo llave");
         Listado_de_Campos.setVisible(true);
         Listado_de_Campos.setLocationRelativeTo(this);
         Listado_de_Campos.setSize(500, 500);
@@ -1404,31 +1388,38 @@ public class Main extends javax.swing.JFrame {
         tabla.addColumn("Campo");
         tabla.addColumn("Tipo");
         String tipo;
-        for (int i = 0; i < metadata.getCampos().size(); i++) {
+        metadata.getCampos().forEach((_item) -> {
             tabla.addRow(cols);
-        }
+        });
 
         Table1.setModel(tabla);
         int primero = 0;
         int segundo = 0;
 
         for (int i = 0; i < metadata.getCampos().size(); i++) {
-            if (metadata.getTipos().get(i).toString().equals("Int")) {
-                tabla.setValueAt(metadata.getCampos().get(i).toString(), primero, segundo);
-                tabla.setValueAt("Entero", primero, segundo + 1);
-                Table1.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("long")) {
-                tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("Long", primero, segundo + 1);
-                Table1.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("String")) {
-                tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("String", primero, segundo + 1);
-                Table1.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("Char")) {
-                tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("Char", primero, segundo + 1);
-                Table1.setModel(tabla);
+            switch (metadata.getTipos().get(i).toString()) {
+                case "Int":
+                    tabla.setValueAt(metadata.getCampos().get(i).toString(), primero, segundo);
+                    tabla.setValueAt("Entero", primero, segundo + 1);
+                    Table1.setModel(tabla);
+                    break;
+                case "long":
+                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
+                    tabla.setValueAt("Long", primero, segundo + 1);
+                    Table1.setModel(tabla);
+                    break;
+                case "String":
+                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
+                    tabla.setValueAt("String", primero, segundo + 1);
+                    Table1.setModel(tabla);
+                    break;
+                case "Char":
+                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
+                    tabla.setValueAt("Char", primero, segundo + 1);
+                    Table1.setModel(tabla);
+                    break;
+                default:
+                    break;
             }
             primero++;
         }
@@ -1455,7 +1446,7 @@ public class Main extends javax.swing.JFrame {
                         try {
                             file.delete();
                             file.createNewFile();
-                        } catch (Exception sdj) {
+                        } catch (IOException sdj) {
                         }
 
                         try {
@@ -1486,7 +1477,7 @@ public class Main extends javax.swing.JFrame {
     private void jmi_Borrar_RegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Borrar_RegistroActionPerformed
         // TODO add your handling code here:
         if (mode == -1) {
-            JOptionPane.showMessageDialog(null, "Seleccione un Registro para borrar.");
+            JOptionPane.showMessageDialog(null, "Seleccione el Registro a borrar.");
         } else {
             try {
                 ArrayList export = new ArrayList();
@@ -1511,11 +1502,11 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         try {
-            int Primarykey = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el PrimaryKey del registro a buscar."));
+            int Primarykey = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el dato de tipo llave primaria del registro a buscar."));
             Registro temporal = new Registro(Primarykey);
             NodoB x;
             if ((x = metadata.getArbolB().search(temporal)) == null) {
-                JOptionPane.showMessageDialog(null, "No se pudo encontrar");
+                JOptionPane.showMessageDialog(null, "No se encontro");
             } else {
 
                 Data datos = Buscar_Dato_Archivo(temporal);
@@ -1526,7 +1517,7 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, info);
 
             }
-        } catch (Exception e) {
+        } catch (HeadlessException | IOException | ClassNotFoundException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Operation aborted.");
         }
     }//GEN-LAST:event_jmi_Buscar_RegistroActionPerformed
@@ -1555,7 +1546,7 @@ public class Main extends javax.swing.JFrame {
                 DefaultTableModel model = (DefaultTableModel) modelo;
                 model.removeRow(rowRemoval);
                 Table.setModel(modelo);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
             }
         }
         //crear uno nuevo con los datos de temporal
@@ -1575,36 +1566,42 @@ public class Main extends javax.swing.JFrame {
         tabla.addColumn("Campo");
         tabla.addColumn("Tipo");
         String tipo;
-        for (int i = 0; i < metadata.getCampos().size(); i++) {
+        metadata.getCampos().forEach((_item) -> {
             tabla.addRow(cols);
-        }
+        });
 
         Table2.setModel(tabla);
         int primero = 0;
         int segundo = 0;
 
         for (int i = 0; i < metadata.getCampos().size(); i++) {
-            if (metadata.getTipos().get(i).toString().equals("Int")) {
-                tabla.setValueAt(metadata.getCampos().get(i).toString(), primero, segundo);
-                tabla.setValueAt("Entero", primero, segundo + 1);
-                Table2.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("long")) {
-                tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("Long", primero, segundo + 1);
-                Table2.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("String")) {
-                tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("String", primero, segundo + 1);
-                Table2.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("Char")) {
-                tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("Char", primero, segundo + 1);
-                Table2.setModel(tabla);
+            switch (metadata.getTipos().get(i).toString()) {
+                case "Int":
+                    tabla.setValueAt(metadata.getCampos().get(i).toString(), primero, segundo);
+                    tabla.setValueAt("Entero", primero, segundo + 1);
+                    Table2.setModel(tabla);
+                    break;
+                case "long":
+                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
+                    tabla.setValueAt("Long", primero, segundo + 1);
+                    Table2.setModel(tabla);
+                    break;
+                case "String":
+                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
+                    tabla.setValueAt("String", primero, segundo + 1);
+                    Table2.setModel(tabla);
+                    break;
+                case "Char":
+                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
+                    tabla.setValueAt("Char", primero, segundo + 1);
+                    Table2.setModel(tabla);
+                    break;
+                default:
+                    break;
             }
             primero++;
         }
 
-       
         jd_Cruzar.setModal(true);
         jd_Cruzar.pack();
         jd_Cruzar.setLocationRelativeTo(this);
@@ -1623,12 +1620,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jmi_crearindicesActionPerformed
 
     private void jmi_Exportar_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportar_ExcelActionPerformed
-       
+
 
     }//GEN-LAST:event_jmi_Exportar_ExcelActionPerformed
 
     private void jmi_Exportrar_XMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_Exportrar_XMLActionPerformed
-       
+
     }//GEN-LAST:event_jmi_Exportrar_XMLActionPerformed
 
     private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked
@@ -1655,7 +1652,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(JDCREAR_CAMPO, "Por favor, LLene los campos vacios");
         } else {
             try {
-                String nombre = "", tipo = "", llave_secundaria = "";
+                String nombre, tipo, llave_secundaria;
                 nombre = txtcr_nombre.getText();
                 tipo = cbocr_tipo.getSelectedItem().toString();
                 llave_secundaria = cbollave_s.getSelectedItem().toString();
@@ -1669,8 +1666,7 @@ public class Main extends javax.swing.JFrame {
                 listcampos.add(c);
                 metodos.CreateCampos(metadata, nombre, tipo, contador, llave_secundaria);
                 contador++;
-            } catch (IOException ex) {
-            } catch (ParseException ex) {
+            } catch (IOException | ParseException ex) {
             }
         }
         txtcr_nombre.setText("");
@@ -1681,18 +1677,18 @@ public class Main extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        int posicion = 0;
+        int posicion;
         if (metadata.getNumregistros() == 0 && metadata.getCampos() != null) {
             try {
                 posicion = cboEliminar.getSelectedIndex();
-                if (metadata.getCampos().size() == 0) {
+                if (metadata.getCampos().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Operacion Invalida");
                 } else {
                     metodos.DeleteCampos(metadata, posicion);
                     BuildTable(metadata, 0);
                     listcampos.remove(posicion);
                 }
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Operacion Invalida");
@@ -1705,14 +1701,21 @@ public class Main extends javax.swing.JFrame {
             Campo s = (Campo) cbocampos.getSelectedItem();
             txtnuevo_Nombre.setText(s.getNom());
             String Tipo = s.getTipo();
-            if (Tipo.equals("Int")) {
-                cbonuevo_tipo.setSelectedIndex(1);
-            } else if (Tipo.equals("long")) {
-                cbonuevo_tipo.setSelectedIndex(2);
-            } else if (Tipo.equals("String")) {
-                cbonuevo_tipo.setSelectedIndex(3);
-            } else if (Tipo.equals("Char")) {
-                cbonuevo_tipo.setSelectedIndex(4);
+            switch (Tipo) {
+                case "Int":
+                    cbonuevo_tipo.setSelectedIndex(1);
+                    break;
+                case "long":
+                    cbonuevo_tipo.setSelectedIndex(2);
+                    break;
+                case "String":
+                    cbonuevo_tipo.setSelectedIndex(3);
+                    break;
+                case "Char":
+                    cbonuevo_tipo.setSelectedIndex(4);
+                    break;
+                default:
+                    break;
             }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un campo");
@@ -1721,8 +1724,8 @@ public class Main extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        String nuevo_nombre = "", nuevo_tipo = "";
-        int posicion = 0;
+        String nuevo_nombre, nuevo_tipo;
+        int posicion;
         if (txtnuevo_Nombre.getText().isEmpty() || cbonuevo_tipo.getSelectedItem().toString().isEmpty()) {
             JOptionPane.showMessageDialog(JDMODIFICAR_CAMPOS, "Por favor, LLene los campos vacios");
         } else {
@@ -1731,7 +1734,7 @@ public class Main extends javax.swing.JFrame {
             posicion = cbocampos.getSelectedIndex();
             if (metadata.getNumregistros() == 0 && metadata.getCampos() != null) {
                 try {
-                    if (metadata.getCampos().size() == 0) {
+                    if (metadata.getCampos().isEmpty()) {
 
                     } else {
                         metodos.ModificarCampos(metadata, nuevo_nombre, nuevo_tipo, posicion);
@@ -1756,7 +1759,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(JDCREAR_CAMPO1, "Por favor, LLene los campos vacios");
         } else {
             try {
-                String nombre = "", tipo = "";
+                String nombre, tipo;
                 nombre = txtcr_nombre1.getText();
                 tipo = cbocr_tipo1.getSelectedItem().toString();
                 Campo c = new Campo(nombre, tipo);
@@ -1773,8 +1776,7 @@ public class Main extends javax.swing.JFrame {
                 JDCREAR_CAMPO.pack();
                 JDCREAR_CAMPO.setLocationRelativeTo(null);
                 JDCREAR_CAMPO.setVisible(true);
-            } catch (IOException ex) {
-            } catch (ParseException ex) {
+            } catch (IOException | ParseException ex) {
             }
         }
         txtcr_nombre.setText("");
@@ -1826,9 +1828,9 @@ public class Main extends javax.swing.JFrame {
         tabla.addColumn("Campo");
         tabla.addColumn("Tipo");
         String tipo;
-        for (int i = 0; i < metadata2.getCampos().size(); i++) {
+        metadata2.getCampos().forEach((_item) -> {
             tabla.addRow(cols);
-        }
+        });
 
         Table3.setModel(tabla);
         int primero = 0;
@@ -1876,16 +1878,16 @@ public class Main extends javax.swing.JFrame {
         tabla.addColumn("Campo");
         tabla.addColumn("Tipo");
         String tipo;
-        for (int i = 0; i < metadata2.getCampos().size(); i++) {
+        metadata2.getCampos().forEach((_item) -> {
             tabla.addRow(cols);
-        }
+        });
 
         Table4.setModel(tabla);
         int primero = 0;
         int segundo = 0;
-        
+
         for (int i = 0; i < metadata2.getCampos().size(); i++) {
-            if (metadata2.getTipos().get(i).toString().equals("Int")&& metadata.getCampos().get(i).toString().equals(metadata2.getCampos().get(i).toString())) {
+            if (metadata2.getTipos().get(i).toString().equals("Int") && metadata.getCampos().get(i).toString().equals(metadata2.getCampos().get(i).toString())) {
                 tabla.setValueAt(metadata2.getCampos().get(i).toString(), primero, segundo);
                 tabla.setValueAt("Entero", primero, segundo + 1);
                 Table4.setModel(tabla);
@@ -1926,22 +1928,16 @@ public class Main extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
+        //</editor-fold>
+
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Main().setVisible(true);
         });
     }
 
