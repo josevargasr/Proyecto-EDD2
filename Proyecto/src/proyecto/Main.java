@@ -28,6 +28,7 @@ public class Main extends javax.swing.JFrame {
     boolean validar = false;
     int contador = 0, cantidad = 0;
     ArrayList<Campo> listcampos = new ArrayList();
+    boolean openfile = false;
 
     public void Salvar_Archivo() {
         JOptionPane.showMessageDialog(null, "Su file se ha salvado exitosamente");
@@ -142,22 +143,33 @@ public class Main extends javax.swing.JFrame {
 
     private void Nuevo_Archivo() {
 
-        String direction;
-        int option = JOptionPane.showConfirmDialog(this, "Desea salvar?");
-
-        switch (option) {
-            case JOptionPane.NO_OPTION:
-                Crear_Archivo();
-                if (FileSuccess == 1) {
-                    metadata = new Metadata();
-                    BuildTable(metadata, 1);
-                }
-                break;
-            case JOptionPane.YES_OPTION:
-                Salvar_Archivo();
-                break;
-            default:
-                break;
+//        String direction;
+//        int option = JOptionPane.showConfirmDialog(this, "Desea salvar?");
+//
+//        switch (option) {
+//            case JOptionPane.NO_OPTION:
+//                Crear_Archivo();
+//                if (FileSuccess == 1) {
+//                    metadata = new Metadata();
+//                    BuildTable(metadata, 1);
+//                }
+//                break;
+//            case JOptionPane.YES_OPTION:
+//                Salvar_Archivo();
+//                break;
+//            default:
+//                break;
+//        }
+        
+        if(openfile = false){
+            Crear_Archivo();
+            if (FileSuccess == 1) {
+                metadata = new Metadata();
+                BuildTable(metadata, 1);
+                openfile = true;
+            }
+        }else{
+            
         }
     }
 
@@ -576,6 +588,7 @@ public class Main extends javax.swing.JFrame {
         txtcr_nombre1 = new javax.swing.JTextField();
         cbocr_tipo1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         JDCREAR_CAMPO = new javax.swing.JDialog();
         btnCrear = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -584,6 +597,7 @@ public class Main extends javax.swing.JFrame {
         cbocr_tipo = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         cbollave_s = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
         JDMODIFICAR_CAMPOS = new javax.swing.JDialog();
         cbocampos = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -593,25 +607,17 @@ public class Main extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         txtnuevo_Nombre = new javax.swing.JTextField();
         cbonuevo_tipo = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
         Listado_de_Campos = new javax.swing.JDialog();
         Listar_Campos = new javax.swing.JScrollPane();
         Table1 = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
+        btnSalir1 = new javax.swing.JButton();
         JDELIMINAR_CAMPOS = new javax.swing.JDialog();
         cboEliminar = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
-        jd_Cruzar = new javax.swing.JDialog();
-        jsp_Tabla_Campos1 = new javax.swing.JScrollPane();
-        Table2 = new javax.swing.JTable();
-        label1 = new java.awt.Label();
-        jsp_Tabla_Campos2 = new javax.swing.JScrollPane();
-        Table3 = new javax.swing.JTable();
-        label2 = new java.awt.Label();
-        jb_Cargar_Cruze = new javax.swing.JButton();
-        jsp_Tabla_Cruce = new javax.swing.JScrollPane();
-        Table4 = new javax.swing.JTable();
-        label3 = new java.awt.Label();
-        jb_Relacion_Campos = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
         jsp_Tabla = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
         jmb_Principal = new javax.swing.JMenuBar();
@@ -631,7 +637,6 @@ public class Main extends javax.swing.JFrame {
         jmi_Borrar_Registro = new javax.swing.JMenuItem();
         jmi_Buscar_Registro = new javax.swing.JMenuItem();
         jmi_modreg = new javax.swing.JMenuItem();
-        jmi_cruzar = new javax.swing.JMenuItem();
         jm_indices = new javax.swing.JMenu();
         jmi_crearindices = new javax.swing.JMenuItem();
         jmi_reindexar = new javax.swing.JMenuItem();
@@ -654,42 +659,52 @@ public class Main extends javax.swing.JFrame {
 
         cbocr_tipo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Int", "long", "String", "Char" }));
 
+        jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel11.setText("CREAR CAMPOS");
+
         javax.swing.GroupLayout JDCREAR_CAMPO1Layout = new javax.swing.GroupLayout(JDCREAR_CAMPO1.getContentPane());
         JDCREAR_CAMPO1.getContentPane().setLayout(JDCREAR_CAMPO1Layout);
         JDCREAR_CAMPO1Layout.setHorizontalGroup(
             JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtcr_nombre1)
-            .addComponent(cbocr_tipo1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDCREAR_CAMPO1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDCREAR_CAMPO1Layout.createSequentialGroup()
+                        .addGroup(JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
+                        .addGap(30, 30, 30)
+                        .addGroup(JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbocr_tipo1, 0, 186, Short.MAX_VALUE)
+                            .addComponent(txtcr_nombre1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDCREAR_CAMPO1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(141, 141, 141))))
             .addGroup(JDCREAR_CAMPO1Layout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addGroup(JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(139, Short.MAX_VALUE))
-            .addComponent(btnCrear1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(81, 81, 81)
+                .addComponent(btnCrear1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 86, Short.MAX_VALUE))
         );
         JDCREAR_CAMPO1Layout.setVerticalGroup(
             JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDCREAR_CAMPO1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
                 .addGroup(JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(JDCREAR_CAMPO1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel7)
-                        .addGap(35, 35, 35))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDCREAR_CAMPO1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(txtcr_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
-                .addComponent(jLabel8)
-                .addGap(41, 41, 41)
-                .addComponent(cbocr_tipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtcr_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)))
+                .addGap(6, 6, 6)
+                .addGroup(JDCREAR_CAMPO1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(cbocr_tipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
                 .addComponent(btnCrear1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         btnCrear.setText("Crear");
@@ -707,52 +722,62 @@ public class Main extends javax.swing.JFrame {
 
         cbocr_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Int", "long", "String", "Char" }));
 
-        jLabel10.setText("Desea que sea llave secundaria?");
+        jLabel10.setText("Llave Secundaria");
 
         cbollave_s.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "SI" }));
+
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel12.setText("CREAR CAMPOS");
 
         javax.swing.GroupLayout JDCREAR_CAMPOLayout = new javax.swing.GroupLayout(JDCREAR_CAMPO.getContentPane());
         JDCREAR_CAMPO.getContentPane().setLayout(JDCREAR_CAMPOLayout);
         JDCREAR_CAMPOLayout.setHorizontalGroup(
             JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtcr_nombre)
-            .addComponent(cbocr_tipo, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(cbollave_s, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(JDCREAR_CAMPOLayout.createSequentialGroup()
                 .addGroup(JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JDCREAR_CAMPOLayout.createSequentialGroup()
-                        .addGap(240, 240, 240)
-                        .addGroup(JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDCREAR_CAMPOLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(3, 3, 3))))
+                        .addGroup(JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addGroup(JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(JDCREAR_CAMPOLayout.createSequentialGroup()
+                                    .addGap(78, 78, 78)
+                                    .addComponent(jLabel4))
+                                .addGroup(JDCREAR_CAMPOLayout.createSequentialGroup()
+                                    .addGap(24, 24, 24)
+                                    .addComponent(jLabel10))))
+                        .addGap(39, 39, 39)
+                        .addGroup(JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtcr_nombre)
+                            .addComponent(cbollave_s, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbocr_tipo, 0, 173, Short.MAX_VALUE)))
                     .addGroup(JDCREAR_CAMPOLayout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel12))
                     .addGroup(JDCREAR_CAMPOLayout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addComponent(jLabel10)))
-                .addContainerGap(184, Short.MAX_VALUE))
+                        .addGap(83, 83, 83)
+                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         JDCREAR_CAMPOLayout.setVerticalGroup(
             JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDCREAR_CAMPOLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jLabel4)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel12)
                 .addGap(18, 18, 18)
-                .addComponent(txtcr_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel10)
+                .addGroup(JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtcr_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(cbollave_s, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(cbocr_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addGroup(JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbollave_s, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(26, 26, 26)
+                .addGroup(JDCREAR_CAMPOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cbocr_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
                 .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         cbocampos.addItemListener(new java.awt.event.ItemListener() {
@@ -761,11 +786,11 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Seleccione el campo");
+        jLabel1.setText("Campo a Modificar:");
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("Nuevo Nombre del Campo:");
 
-        jLabel3.setText("Tipo de dato");
+        jLabel3.setText("Tipo:");
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -774,7 +799,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnSalir.setText("Salir");
+        btnSalir.setText("Regresar");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
@@ -783,55 +808,66 @@ public class Main extends javax.swing.JFrame {
 
         cbonuevo_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Int", "long", "String", "Char" }));
 
+        jLabel13.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel13.setText("MODIFICAR CAMPOS");
+
         javax.swing.GroupLayout JDMODIFICAR_CAMPOSLayout = new javax.swing.GroupLayout(JDMODIFICAR_CAMPOS.getContentPane());
         JDMODIFICAR_CAMPOS.getContentPane().setLayout(JDMODIFICAR_CAMPOSLayout);
         JDMODIFICAR_CAMPOSLayout.setHorizontalGroup(
             JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbocampos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(156, 156, 156))))
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel1))
                     .addGroup(JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(78, 78, 78)
-                        .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtnuevo_Nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                            .addComponent(cbonuevo_tipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel13))
+                    .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtnuevo_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbocampos, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbonuevo_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(111, 111, 111)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(39, Short.MAX_VALUE))
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel2))
+                    .addGroup(JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(jLabel3)))
+                .addGap(103, 103, 103))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 67, Short.MAX_VALUE))
         );
         JDMODIFICAR_CAMPOSLayout.setVerticalGroup(
             JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel13)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbocampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtnuevo_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(82, 82, 82)
-                .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbonuevo_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
-                .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(106, 106, 106))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtnuevo_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel3)
+                .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbonuevo_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDMODIFICAR_CAMPOSLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                        .addGroup(JDMODIFICAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38))))
         );
 
         Table1.setModel(new javax.swing.table.DefaultTableModel(
@@ -854,24 +890,53 @@ public class Main extends javax.swing.JFrame {
         });
         Listar_Campos.setViewportView(Table1);
 
+        jLabel14.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel14.setText("LISTAR CAMPOS");
+
+        btnSalir1.setText("Regresar");
+        btnSalir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalir1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Listado_de_CamposLayout = new javax.swing.GroupLayout(Listado_de_Campos.getContentPane());
         Listado_de_Campos.getContentPane().setLayout(Listado_de_CamposLayout);
         Listado_de_CamposLayout.setHorizontalGroup(
             Listado_de_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Listado_de_CamposLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(Listar_Campos, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
             .addGroup(Listado_de_CamposLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(Listar_Campos, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
-                .addGap(117, 117, 117))
+                .addGroup(Listado_de_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Listado_de_CamposLayout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabel14))
+                    .addGroup(Listado_de_CamposLayout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addComponent(btnSalir1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         Listado_de_CamposLayout.setVerticalGroup(
             Listado_de_CamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Listado_de_CamposLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Listar_Campos, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Listado_de_CamposLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
+                .addComponent(Listar_Campos, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSalir1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jLabel6.setText("Seleccione el campo que desea Eliminar: ");
+        cboEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboEliminarActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Campo a Eliminar:");
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -880,161 +945,41 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel15.setText("ELIMINAR CAMPOS");
+
         javax.swing.GroupLayout JDELIMINAR_CAMPOSLayout = new javax.swing.GroupLayout(JDELIMINAR_CAMPOS.getContentPane());
         JDELIMINAR_CAMPOS.getContentPane().setLayout(JDELIMINAR_CAMPOSLayout);
         JDELIMINAR_CAMPOSLayout.setHorizontalGroup(
             JDELIMINAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cboEliminar, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(JDELIMINAR_CAMPOSLayout.createSequentialGroup()
                 .addGroup(JDELIMINAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JDELIMINAR_CAMPOSLayout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(114, 114, 114)
+                        .addComponent(jLabel6))
                     .addGroup(JDELIMINAR_CAMPOSLayout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jLabel6)))
-                .addContainerGap(138, Short.MAX_VALUE))
+                        .addGap(89, 89, 89)
+                        .addComponent(jLabel15))
+                    .addGroup(JDELIMINAR_CAMPOSLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(cboEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(JDELIMINAR_CAMPOSLayout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         JDELIMINAR_CAMPOSLayout.setVerticalGroup(
             JDELIMINAR_CAMPOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JDELIMINAR_CAMPOSLayout.createSequentialGroup()
-                .addGap(86, 86, 86)
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addComponent(jLabel15)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel6)
-                .addGap(61, 61, 61)
+                .addGap(18, 18, 18)
                 .addComponent(cboEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
-        );
-
-        Table2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        Table2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Table2MouseClicked(evt);
-            }
-        });
-        Table2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                Table2PropertyChange(evt);
-            }
-        });
-        jsp_Tabla_Campos1.setViewportView(Table2);
-
-        label1.setText("Campos Primer Archivo");
-
-        Table3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        Table3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Table3MouseClicked(evt);
-            }
-        });
-        Table3.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                Table3PropertyChange(evt);
-            }
-        });
-        jsp_Tabla_Campos2.setViewportView(Table3);
-
-        label2.setText("Campos Segundo Archivo Archivo");
-
-        jb_Cargar_Cruze.setText("Cargar Campos Segundo Archivo");
-        jb_Cargar_Cruze.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_Cargar_CruzeActionPerformed(evt);
-            }
-        });
-
-        Table4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        Table4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Table4MouseClicked(evt);
-            }
-        });
-        Table4.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                Table4PropertyChange(evt);
-            }
-        });
-        jsp_Tabla_Cruce.setViewportView(Table4);
-
-        label3.setText("Campos Relacionados de ambos archivos");
-
-        jb_Relacion_Campos.setText("Hacer Relacion");
-        jb_Relacion_Campos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_Relacion_CamposActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jd_CruzarLayout = new javax.swing.GroupLayout(jd_Cruzar.getContentPane());
-        jd_Cruzar.getContentPane().setLayout(jd_CruzarLayout);
-        jd_CruzarLayout.setHorizontalGroup(
-            jd_CruzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CruzarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jd_CruzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jsp_Tabla_Campos1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jd_CruzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CruzarLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(272, 272, 272))
-                    .addGroup(jd_CruzarLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(jd_CruzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jb_Cargar_Cruze)
-                            .addComponent(jsp_Tabla_Campos2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jd_CruzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jsp_Tabla_Cruce, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_Relacion_Campos))
-                .addGap(144, 144, 144))
-        );
-        jd_CruzarLayout.setVerticalGroup(
-            jd_CruzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CruzarLayout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addGroup(jd_CruzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_Relacion_Campos)
-                    .addComponent(jb_Cargar_Cruze))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(jd_CruzarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jd_CruzarLayout.createSequentialGroup()
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jsp_Tabla_Campos2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jd_CruzarLayout.createSequentialGroup()
-                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(jsp_Tabla_Campos1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jd_CruzarLayout.createSequentialGroup()
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(jsp_Tabla_Cruce, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(69, 69, 69))
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1178,14 +1123,6 @@ public class Main extends javax.swing.JFrame {
         });
         jm_Registros.add(jmi_modreg);
 
-        jmi_cruzar.setText("Cruzar Archivos");
-        jmi_cruzar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmi_cruzarActionPerformed(evt);
-            }
-        });
-        jm_Registros.add(jmi_cruzar);
-
         jmb_Principal.add(jm_Registros);
 
         jm_indices.setText("Indice");
@@ -1237,16 +1174,16 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jsp_Tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(jsp_Tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jsp_Tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                .addComponent(jsp_Tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1342,9 +1279,6 @@ public class Main extends javax.swing.JFrame {
             JDCREAR_CAMPO1.pack();
             JDCREAR_CAMPO1.setLocationRelativeTo(null);
             JDCREAR_CAMPO1.setVisible(true);
-            ImageIcon key = new ImageIcon(getClass().getResource("/Imagen/key.png"));
-            ImageIcon icono = new ImageIcon(key.getImage().getScaledInstance(jLabel9.getWidth(), jLabel9.getHeight(), Image.SCALE_DEFAULT));
-            jLabel9.setIcon(icono);
         }
     }//GEN-LAST:event_jmi_Crear_CampoActionPerformed
 
@@ -1553,61 +1487,6 @@ public class Main extends javax.swing.JFrame {
         //guardar
     }//GEN-LAST:event_jmi_modregActionPerformed
 
-    private void jmi_cruzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_cruzarActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "El primer campo es campo llave");
-        Table2.setForeground(Color.BLACK);
-        Table2.setBackground(Color.WHITE);
-        Table2.setFont(new Font("", 1, 22));
-        Table2.setRowHeight(30);
-        Table2.putClientProperty("terminateEditOnFocusLost", true);
-        String[] cols = {"", ""};
-        DefaultTableModel tabla = new DefaultTableModel();
-        tabla.addColumn("Campo");
-        tabla.addColumn("Tipo");
-        String tipo;
-        metadata.getCampos().forEach((_item) -> {
-            tabla.addRow(cols);
-        });
-
-        Table2.setModel(tabla);
-        int primero = 0;
-        int segundo = 0;
-
-        for (int i = 0; i < metadata.getCampos().size(); i++) {
-            switch (metadata.getTipos().get(i).toString()) {
-                case "Int":
-                    tabla.setValueAt(metadata.getCampos().get(i).toString(), primero, segundo);
-                    tabla.setValueAt("Entero", primero, segundo + 1);
-                    Table2.setModel(tabla);
-                    break;
-                case "long":
-                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                    tabla.setValueAt("Long", primero, segundo + 1);
-                    Table2.setModel(tabla);
-                    break;
-                case "String":
-                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                    tabla.setValueAt("String", primero, segundo + 1);
-                    Table2.setModel(tabla);
-                    break;
-                case "Char":
-                    tabla.setValueAt(metadata.getCampos().get(i), primero, segundo);
-                    tabla.setValueAt("Char", primero, segundo + 1);
-                    Table2.setModel(tabla);
-                    break;
-                default:
-                    break;
-            }
-            primero++;
-        }
-
-        jd_Cruzar.setModal(true);
-        jd_Cruzar.pack();
-        jd_Cruzar.setLocationRelativeTo(this);
-        jd_Cruzar.setVisible(true);
-    }//GEN-LAST:event_jmi_cruzarActionPerformed
-
     private void jmi_crearindicesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_crearindicesActionPerformed
         // TODO add your handling code here:
         System.out.println("=========================================");
@@ -1649,7 +1528,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         if (txtcr_nombre.getText().isEmpty() || cbocr_tipo.getSelectedItem().toString().isEmpty()) {
-            JOptionPane.showMessageDialog(JDCREAR_CAMPO, "Por favor, LLene los campos vacios");
+            JOptionPane.showMessageDialog(JDCREAR_CAMPO, "Uno o más campos están vacios");
         } else {
             try {
                 String nombre, tipo, llave_secundaria;
@@ -1768,6 +1647,7 @@ public class Main extends javax.swing.JFrame {
                 contador++;
                 BuildTable(metadata, 0);
                 validar = true;
+                JOptionPane.showConfirmDialog(this, "El campo se creó con éxito");
                 JDCREAR_CAMPO1.setModal(false);
                 JDCREAR_CAMPO1.pack();
                 JDCREAR_CAMPO1.setLocationRelativeTo(null);
@@ -1792,125 +1672,20 @@ public class Main extends javax.swing.JFrame {
         JDMODIFICAR_CAMPOS.setVisible(false);
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void Table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Table2MouseClicked
-
-    private void Table2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_Table2PropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Table2PropertyChange
-
-    private void Table3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Table3MouseClicked
-
-    private void Table3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_Table3PropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Table3PropertyChange
-
-    private void jb_Cargar_CruzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_Cargar_CruzeActionPerformed
-        // TODO add your handling code here:
-        Cargar_Archivo_2();
-        if (FileSuccess2 == 1) {
-            metadata2 = new Metadata();
-            try {
-                CargarMetadatos_2();
-            } catch (ClassNotFoundException ex) {
-            }
-        }
-        Table3.setForeground(Color.BLACK);
-        Table3.setBackground(Color.WHITE);
-        Table3.setFont(new Font("", 1, 22));
-        Table3.setRowHeight(30);
-        Table3.putClientProperty("terminateEditOnFocusLost", true);
-        String[] cols = {"", ""};
-        DefaultTableModel tabla = new DefaultTableModel();
-        tabla.addColumn("Campo");
-        tabla.addColumn("Tipo");
-        String tipo;
-        metadata2.getCampos().forEach((_item) -> {
-            tabla.addRow(cols);
-        });
-
-        Table3.setModel(tabla);
-        int primero = 0;
-        int segundo = 0;
-
-        for (int i = 0; i < metadata2.getCampos().size(); i++) {
-            if (metadata2.getTipos().get(i).toString().equals("Int")) {
-                tabla.setValueAt(metadata2.getCampos().get(i).toString(), primero, segundo);
-                tabla.setValueAt("Entero", primero, segundo + 1);
-                Table3.setModel(tabla);
-            } else if (metadata2.getTipos().get(i).toString().equals("long")) {
-                tabla.setValueAt(metadata2.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("Long", primero, segundo + 1);
-                Table3.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("String")) {
-                tabla.setValueAt(metadata2.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("String", primero, segundo + 1);
-                Table3.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("Char")) {
-                tabla.setValueAt(metadata2.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("Char", primero, segundo + 1);
-                Table3.setModel(tabla);
-            }
-            primero++;
-        }
-    }//GEN-LAST:event_jb_Cargar_CruzeActionPerformed
-
-    private void Table4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Table4MouseClicked
-
-    private void Table4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_Table4PropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Table4PropertyChange
-
-    private void jb_Relacion_CamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_Relacion_CamposActionPerformed
-        // TODO add your handling code here:
-        Table4.setForeground(Color.BLACK);
-        Table4.setBackground(Color.WHITE);
-        Table4.setFont(new Font("", 1, 22));
-        Table4.setRowHeight(30);
-        Table4.putClientProperty("terminateEditOnFocusLost", true);
-        String[] cols = {""};
-        DefaultTableModel tabla = new DefaultTableModel();
-        tabla.addColumn("Campo");
-        tabla.addColumn("Tipo");
-        String tipo;
-        metadata2.getCampos().forEach((_item) -> {
-            tabla.addRow(cols);
-        });
-
-        Table4.setModel(tabla);
-        int primero = 0;
-        int segundo = 0;
-
-        for (int i = 0; i < metadata2.getCampos().size(); i++) {
-            if (metadata2.getTipos().get(i).toString().equals("Int") && metadata.getCampos().get(i).toString().equals(metadata2.getCampos().get(i).toString())) {
-                tabla.setValueAt(metadata2.getCampos().get(i).toString(), primero, segundo);
-                tabla.setValueAt("Entero", primero, segundo + 1);
-                Table4.setModel(tabla);
-            } else if (metadata2.getTipos().get(i).toString().equals("long")) {
-                tabla.setValueAt(metadata2.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("Long", primero, segundo + 1);
-                Table4.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("String")) {
-                tabla.setValueAt(metadata2.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("String", primero, segundo + 1);
-                Table4.setModel(tabla);
-            } else if (metadata.getTipos().get(i).toString().equals("Char")) {
-                tabla.setValueAt(metadata2.getCampos().get(i), primero, segundo);
-                tabla.setValueAt("Char", primero, segundo + 1);
-                Table4.setModel(tabla);
-            }
-            primero++;
-        }
-    }//GEN-LAST:event_jb_Relacion_CamposActionPerformed
-
     private void jmi_reindexarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_reindexarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jmi_reindexarActionPerformed
+
+    private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
+        Listado_de_Campos.setModal(false);
+        Listado_de_Campos.pack();
+        Listado_de_Campos.setLocationRelativeTo(null);
+        Listado_de_Campos.setVisible(false);
+    }//GEN-LAST:event_btnSalir1ActionPerformed
+
+    private void cboEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1950,14 +1725,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane Listar_Campos;
     private javax.swing.JTable Table;
     private javax.swing.JTable Table1;
-    private javax.swing.JTable Table2;
-    private javax.swing.JTable Table3;
-    private javax.swing.JTable Table4;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnCrear1;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnSalir1;
     private javax.swing.JComboBox<String> cboEliminar;
     private javax.swing.JComboBox<String> cbocampos;
     private javax.swing.JComboBox<String> cbocr_tipo;
@@ -1966,6 +1739,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbonuevo_tipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1974,9 +1752,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JButton jb_Cargar_Cruze;
-    private javax.swing.JButton jb_Relacion_Campos;
-    private javax.swing.JDialog jd_Cruzar;
     private javax.swing.JMenu jm_Archivo;
     private javax.swing.JMenu jm_Estandarizacion;
     private javax.swing.JMenu jm_Registros;
@@ -1998,16 +1773,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmi_Salir;
     private javax.swing.JMenuItem jmi_Salvar_Archivo;
     private javax.swing.JMenuItem jmi_crearindices;
-    private javax.swing.JMenuItem jmi_cruzar;
     private javax.swing.JMenuItem jmi_modreg;
     private javax.swing.JMenuItem jmi_reindexar;
     private javax.swing.JScrollPane jsp_Tabla;
-    private javax.swing.JScrollPane jsp_Tabla_Campos1;
-    private javax.swing.JScrollPane jsp_Tabla_Campos2;
-    private javax.swing.JScrollPane jsp_Tabla_Cruce;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
-    private java.awt.Label label3;
     private javax.swing.JTextField txtcr_nombre;
     private javax.swing.JTextField txtcr_nombre1;
     private javax.swing.JTextField txtnuevo_Nombre;
