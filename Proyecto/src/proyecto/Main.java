@@ -31,7 +31,8 @@ public class Main extends javax.swing.JFrame {
     boolean openfile = false;
 
     public void Salvar_Archivo() {
-        JOptionPane.showMessageDialog(null, "Su file se ha salvado exitosamente");
+        
+        JOptionPane.showMessageDialog(null, "Su archivo se ha guardado exitosamente");
     }
 
     public void Cargar_Archivo() {
@@ -49,10 +50,10 @@ public class Main extends javax.swing.JFrame {
                     direction = fileChooser.getSelectedFile().getPath() + ".dat";
                     Archivo = fileChooser.getSelectedFile();
                     this.file = Archivo;
-                    JOptionPane.showMessageDialog(null, "Enhorabuena!");
+                    JOptionPane.showMessageDialog(null, "El archivo se abrió con éxito");
                     FileSuccess = 1;
                 } else {
-                    JOptionPane.showMessageDialog(this, "No se pudo abrir asegurese que su archivo sea un archivo DAT.");
+                    JOptionPane.showMessageDialog(this, "No se pudo abrir, asegurese que su archivo sea un archivo DAT.");
                 }
 
             } catch (HeadlessException e) {
@@ -160,17 +161,13 @@ public class Main extends javax.swing.JFrame {
 //            default:
 //                break;
 //        }
-        
-        if(openfile = false){
-            Crear_Archivo();
-            if (FileSuccess == 1) {
-                metadata = new Metadata();
-                BuildTable(metadata, 1);
-                openfile = true;
-            }
-        }else{
-            
+        Crear_Archivo();
+        if (FileSuccess == 1) {
+            metadata = new Metadata();
+            BuildTable(metadata, 1);
+            openfile = true;
         }
+
     }
 
     private void Crear_Archivo() {
@@ -274,7 +271,6 @@ public class Main extends javax.swing.JFrame {
         }
 
         ArrayList export2 = new ArrayList();
-
         export2.addAll(Arrays.asList(insertarray));
         Registro temporal = new Registro(Integer.parseInt(insertarray[0].toString()));
 
@@ -1248,9 +1244,10 @@ public class Main extends javax.swing.JFrame {
                     listcampos.add(c);
                 }
                 jmi_Campos.setEnabled(true);
-                jmi_Modificar_Campo.setEnabled(false);
-                jmi_Crear_Campo.setEnabled(false);
-                jmi_Borrar_Campo.setEnabled(false);
+                jmi_Modificar_Campo.setEnabled(true);
+                jmi_Crear_Campo.setEnabled(true);
+                jmi_Listar_Campos.setEnabled(true);
+                jmi_Borrar_Campo.setEnabled(true);
                 jm_Registros.setEnabled(true);
                 jm_indices.setEnabled(true);
                 jm_Estandarizacion.setEnabled(true);
